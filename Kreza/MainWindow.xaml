@@ -1,0 +1,52 @@
+﻿<Window x:Class="Kreza.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="KAREZA"  Height="504" Width="705" Background="#FFD6DBE9">
+    <Grid >
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+        </Grid.Background>
+
+
+        <Menu IsMainMenu="True" VerticalAlignment="Top"  Height="25"  RenderTransformOrigin="0.501,0.933" Background="{x:Null}">
+            <MenuItem Header="_FILE" FontWeight="Bold" AllowDrop="True" Foreground="Black" Height="30"  RenderTransformOrigin="0.567,0.489" >
+                <MenuItem Header=" _Open Song" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Exit" Foreground="Black"/>
+
+            </MenuItem>
+
+            <MenuItem Height="25" Header="_LIBRARY" FontWeight="Bold" AllowDrop="True" Foreground="Black">
+                <MenuItem Header=" _View All Songs" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Add PlayList" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Open PlayList" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Edit PlayList" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Add" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Delet" Foreground="Black"/>
+                <Separator/>
+                <MenuItem Header=" _Delet All" Foreground="Black"/>
+
+            </MenuItem>
+
+
+            <MenuItem Header="_ABOUT" FontWeight="Bold"  Height="30"  Foreground="Black"/>
+        </Menu>
+        <Button Content="Play"  HorizontalAlignment="Left" Margin="347,437,0,0" VerticalAlignment="Top" Width="75">
+
+        </Button>
+        <Button Content="Pause" HorizontalAlignment="Left" Margin="215,437,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Mute" HorizontalAlignment="Left" Margin="492,442,0,0" VerticalAlignment="Top" Width="38">
+
+        </Button>
+        <Slider HorizontalAlignment="Left" Margin="135,410,0,0" VerticalAlignment="Top" Width="562" Value="0.1" Maximum="10"/>
+        <Slider HorizontalAlignment="Left" Margin="596,437,0,0" VerticalAlignment="Top" Width="91" Value="1" Maximum="10"/>
+
+
+
+    </Grid>
+</Window>
