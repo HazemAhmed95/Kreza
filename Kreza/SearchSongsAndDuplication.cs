@@ -9,6 +9,7 @@ namespace Kreza
 {
     class SearchSongsAndDuplication
     {
+        
         List<string> NewSongs = new List<string>();
          //recursive function for searching all the windows
         private void SearchDirectory(string path)
@@ -24,7 +25,21 @@ namespace Kreza
                     // getting the file data
                     string SongData = SongName + "|" + SongPath;
                     // putting the file data to the list
-                    NewSongs.Add(SongData);
+                     bool found = false;
+                    // searching the soung name to clear the duplication with same name with different pathes 
+                     foreach (string item in NewSongs)
+                     {
+                         string[] field = item.Split('|');
+                         if (field[0] == SongName)
+                         {
+                             found = true;
+                             break;
+                         }
+                     }
+                    if ( ! found)
+                    {
+                        NewSongs.Add(SongData);
+                    }
         
                 }
                 // searching the sub directories
