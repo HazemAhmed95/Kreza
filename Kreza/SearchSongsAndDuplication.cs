@@ -12,17 +12,25 @@ namespace Kreza
 {
     class SearchSongsAndDuplication
     {
+<<<<<<< HEAD
         List<string> NewSongs = new List<string>(); //New Songs to be added to All Songs file.
         HashSet<string> Set = new HashSet<string>(); //Helper HashSet.
 
         //Recursive function for searching all the windows.
         public void SearchDirectory(string path)
+=======
+        
+        List<string> NewSongs = new List<string>();
+         //recursive function for searching all the windows
+        private void SearchDirectory(string path)
+>>>>>>> a447c96fd7fb693e6830d440d4dc0dbf436cf829
         {
             try
             {
                 //Getting all the files with the ".mp3" extension in the drive.
                 foreach (string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
                 {
+<<<<<<< HEAD
                     string SongName = Path.GetFileName(SongPath);
                     string SongData = GettingSongData(SongPath);
 
@@ -32,6 +40,30 @@ namespace Kreza
                         NewSongs.Add(SongData);
                         Set.Add(SongName);
                     }
+=======
+                    // getting the file name
+                    string SongName = Path.GetFileName(file); 
+                    string SongPath = file;
+                    // getting the file data
+                    string SongData = SongName + "|" + SongPath;
+                    // putting the file data to the list
+                     bool found = false;
+                    // searching the soung name to clear the duplication with same name with different pathes 
+                     foreach (string item in NewSongs)
+                     {
+                         string[] field = item.Split('|');
+                         if (field[0] == SongName)
+                         {
+                             found = true;
+                             break;
+                         }
+                     }
+                    if ( ! found)
+                    {
+                        NewSongs.Add(SongData);
+                    }
+        
+>>>>>>> a447c96fd7fb693e6830d440d4dc0dbf436cf829
                 }
 
                 //Searching the sub directories.
