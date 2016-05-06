@@ -27,32 +27,36 @@ namespace Kreza
         {
             InitializeComponent();
         }
-      
-           
-         StreamReader Reader; 
-        string reading;
-        int fixing;
+
+
+        StreamReader FileReader; 
+        string line;
+        int padding;
         
         SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
         
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void ViewAllSongs(object sender, RoutedEventArgs e)//Viewing all songs.
         {
-            Reader = new StreamReader("All Songs.txt");
-            while ((reading = Reader.ReadLine()) != null)
+            FileReader = new StreamReader("All Songs.txt");//Accessing AllSongs file.
+
+            while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
-                string add ="";
-                string[] splitter = reading.Split('|');
-                fixing = 80 - splitter[0].Length;
-                for (int i = 0; i < fixing; i++)
-                {//song
-                      add += " ";
+                string Spaces ="";
+                string[] splitter = line.Split('|');
+                padding = 80 - splitter[0].Length;
+               
+                for (int i = 0; i < padding; i++)//Making spaces for the margins.
+                {
+                    Spaces += " ";
                 }
-                SongsList.Items.Add(splitter[0]+add+"\t"+splitter[1]+"\t\t"+splitter[2]);
+
+                SongsList.Items.Add(splitter[0] + Spaces + "\t" + splitter[1] + "\t" + splitter[2]);//Adding the songs to the list.
             }
-            Reader.Close();
+           
+            FileReader.Close();//Closing the file.
         }
         
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -62,35 +66,36 @@ namespace Kreza
             {
                 string filename = openFileDialog.FileName;
                 string path = System.IO.Path.GetDirectoryName(filename);
-                sr.SearchDirectory(path);      
+                sr.SearchDirectory(path);      //Searching in directory and subdirectories.
                 
             }
         }
 
      
 
-        private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Double clicked items.
         {
-            string IsSelected = SongsList.SelectedItem.ToString();
-            Reader = new StreamReader("All Songs.txt");
-            while ((reading = Reader.ReadLine()) != null)
+            string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
+           
+            FileReader = new StreamReader("All Songs.txt");//Accessing the file
+           
+            while ((line = FileReader.ReadLine()) != null)
             {
-                string[] splitter = reading.Split('|');
-                if (IsSelected.Contains(splitter[0]))
+                string[] splitter = line.Split('|');//Splitting the line to 3 fields
+             
+                if (Selected.Contains(splitter[0]))//checking if the the name of the songs simialer to selected item or not
                 {
-                    Uri path = new Uri(splitter[3]);
+                    Uri path = new Uri(splitter[3]);//Giving it it's path
                     ME1.Source = path;
-                    ME1.LoadedBehavior = MediaState.Play;
+                    ME1.LoadedBehavior = MediaState.Play; //play the song.
                     
                 }
             }
-            Reader.Close();
+           
+            FileReader.Close();//Closing the access
         }
 
-        private void SongsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        } 
+       
               
         
         

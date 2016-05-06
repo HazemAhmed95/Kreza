@@ -10,13 +10,13 @@
 
         <Menu IsMainMenu="True" VerticalAlignment="Top"  Height="25"  RenderTransformOrigin="0.501,0.933" Background="{x:Null}">
             <MenuItem   Header="_FILE" FontWeight="Bold" AllowDrop="True" Foreground="White" Height="30"  RenderTransformOrigin="0.567,0.489" >
-                <MenuItem Click="MenuItem_Click_1" Header=" _Open Song" Foreground="Black"/>
+                <MenuItem Click="OpeningFileDialog" Header=" _Open Song" Foreground="Black"/>
                 <Separator/>
                 <MenuItem Header=" _Exit" Foreground="Black"/>
 
             </MenuItem>
             <MenuItem Height="25" Header="_LIBRARY" FontWeight="Bold" AllowDrop="True" Foreground="White">
-                <MenuItem Header=" _View All Songs" Click="MenuItem_Click" Foreground="Black"/>
+                <MenuItem Header=" _View All Songs" Click="ViewAllSongs" Foreground="Black"/>
                 <Separator/>
                 <MenuItem Header=" _Add PlayList" Foreground="Black"/>
                 <Separator/>
@@ -46,7 +46,7 @@
         <Slider HorizontalAlignment="Left" Margin="596,437,0,0" VerticalAlignment="Top" Width="91" Value="1" Maximum="10"/>
         <TextBlock HorizontalAlignment="Left" Margin="37,46,0,0" TextWrapping="Wrap" Text="Songs" VerticalAlignment="Top"/>
 
-        <ListBox Background="Black" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="Green" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="24,67,0,107.4" VerticalAlignment="Center" Width="652" Grid.Column="0" SelectionChanged="SongsList_SelectionChanged" SelectionMode="Single" FontFamily="Papyrus"/>
+        <ListBox Background="Black" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="Green" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="24,67,0,107.4" VerticalAlignment="Center" Width="652" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
 
 
     </Grid>
