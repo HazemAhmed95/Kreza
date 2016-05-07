@@ -52,10 +52,14 @@ namespace Kreza
         {
             string SongName = Path.GetFileName(SongPath);
 
+            
+
             TagLib.File tagFile = TagLib.File.Create(SongPath);
 
             string artist = tagFile.Tag.FirstAlbumArtist;
-
+            IPicture newArt = new Picture(SongPath);
+            tagFile.Tag.Pictures = new IPicture[1] { newArt };
+            tagFile.Save();
             if (String.IsNullOrWhiteSpace(artist))
             {
                 artist = "Unknown";

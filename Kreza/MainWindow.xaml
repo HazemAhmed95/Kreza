@@ -42,12 +42,12 @@
         <Button Content="Mute" HorizontalAlignment="Left" Margin="492,442,0,0" VerticalAlignment="Top" Width="38">
 
         </Button>
-        <Slider HorizontalAlignment="Left" Margin="135,410,0,0" VerticalAlignment="Top" Width="562" Value="0.1" Maximum="10"/>
+        <Slider HorizontalAlignment="Left" Margin="215,415,0,0" VerticalAlignment="Top" Width="472" Value="0.1" Maximum="10" Height="17"/>
         <Slider HorizontalAlignment="Left" Margin="596,437,0,0" VerticalAlignment="Top" Width="91" Value="1" Maximum="10"/>
         <TextBlock HorizontalAlignment="Left" Margin="37,46,0,0" TextWrapping="Wrap" Text="Songs" VerticalAlignment="Top"/>
 
-        <ListBox Background="Black" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="Green" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="24,67,0,107.4" VerticalAlignment="Center" Width="652" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
-
+        <ListBox Background="Black" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="Green" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="10,67,0,107.4" VerticalAlignment="Center" Width="169" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
+        <Image  Name="AlbumArt" Margin="282,98,197.4,159.4"/>
 
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using TagLib;
 
 
 namespace Kreza
@@ -23,9 +24,11 @@ namespace Kreza
     /// </summary>
     public partial class MainWindow : Window
     {
+       
         public MainWindow()
         {
             InitializeComponent();
+          
         }
 
 
@@ -41,16 +44,25 @@ namespace Kreza
 
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
-                string Spaces ="";
+                //string Spaces ="";
                 string[] splitter = line.Split('|');
-                padding = 80 - splitter[0].Length;
+                //padding = 80 - splitter[0].Length;
                
-                for (int i = 0; i < padding; i++)//Making spaces for the margins.
-                {
-                    Spaces += " ";
-                }
+                //for (int i = 0; i < padding; i++)//Making spaces for the margins.
+                //{
+                //    Spaces += " ";
+                //}
+                int cutter=0;
+              for(int i = 0; i < splitter[0].Length; i++)
+                  {
+               if(splitter[0][i] == '.'){
+                  cutter = i + 1;
+                  break;
+                    }	
+                   }
 
-                SongsList.Items.Add(splitter[0] + Spaces + "\t" + splitter[1] + "\t" + splitter[2]);//Adding the songs to the list.
+            splitter[0] = splitter[0].Substring(0,cutter);
+                SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
             }
            
             FileReader.Close();//Closing the file.
@@ -71,27 +83,48 @@ namespace Kreza
             }
         }
 
-     
+
 
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Double clicked items.
         {
             string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
-           
+            Selected = Selected + "mp3";
             FileReader = new StreamReader("All Songs.txt");//Accessing the file
-           
+
             while ((line = FileReader.ReadLine()) != null)
             {
                 string[] splitter = line.Split('|');//Splitting the line to 3 fields
-             
+
                 if (Selected.Contains(splitter[0]))//checking if the the name of the songs simialer to selected item or not
                 {
                     Uri path = new Uri(splitter[3]);//Giving it it's path
                     ME1.Source = path;
                     ME1.LoadedBehavior = MediaState.Play; //play the song.
                     
+                    try
+                    { //Getting the Album art source
+                    TagLib.File tagFile = TagLib.File.Create(splitter[3]);
+                    TagLib.IPicture pic = tagFile.Tag.Pictures[0];
+                    MemoryStream ms = new MemoryStream(pic.Data.Data);
+                    ms.Seek(0, SeekOrigin.Begin);
+
+                    // ImageSource 
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+
+                    
+                    AlbumArt.Source = bitmap; 
+                    }
+                    catch (Exception)// exception if there is no Album art.
+                    { 
+                        BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
+                        AlbumArt.Source = image;
+                    }
                 }
             }
-           
+
             FileReader.Close();//Closing the access
         }
 
