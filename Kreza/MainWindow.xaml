@@ -35,19 +35,18 @@
 
             <MenuItem Header="_ABOUT" FontWeight="Bold"  Height="30" Foreground="White"/>
         </Menu>
-        <Button Content="Play"  HorizontalAlignment="Left" Margin="347,437,0,0" VerticalAlignment="Top" Width="75">
-
-        </Button>
-        <Button Content="Pause" HorizontalAlignment="Left" Margin="215,437,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Mute" HorizontalAlignment="Left" Margin="492,442,0,0" VerticalAlignment="Top" Width="38">
-
-        </Button>
         <Slider HorizontalAlignment="Left" Margin="215,415,0,0" VerticalAlignment="Top" Width="472" Value="0.1" Maximum="10" Height="17"/>
-        <Slider HorizontalAlignment="Left" Margin="596,437,0,0" VerticalAlignment="Top" Width="91" Value="1" Maximum="10"/>
         <TextBlock HorizontalAlignment="Left" Margin="37,46,0,0" TextWrapping="Wrap" Text="Songs" VerticalAlignment="Top"/>
 
         <ListBox Background="Black" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="Green" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="10,67,0,107.4" VerticalAlignment="Center" Width="169" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
         <Image  Name="AlbumArt" Margin="282,98,197.4,159.4"/>
+        <Button Name="PauseBtn"  Content="Play" HorizontalAlignment="Left" Margin="393,437,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="282,437,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
+        <Button Name="ForBtn" Content="Forword" HorizontalAlignment="Left" Margin="503,437,0,0" VerticalAlignment="Top" Width="75" Click="ForBtn_Click"/>
+        <Button Name="BackBtn" Content="Backword" HorizontalAlignment="Left" Margin="178,437,0,0" VerticalAlignment="Top" Width="75" Click="BackBtn_Click"/>
+        <Button Name="MuteBtn" Content="Mute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="55" Margin="590,64,0,0" Click="MuteBtn_Click"/>
+        <Slider Name="VolSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Value=".6" Margin="362,66,0,0" Width="154"  Minimum="0" Maximum="1" ValueChanged="ValueChanged"/>
 
+        <Label Content="Volume     0                                                    100" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="282,58,0,0"/>
     </Grid>
 </Window>
