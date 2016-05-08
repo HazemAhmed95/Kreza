@@ -28,9 +28,75 @@ namespace Kreza
         public MainWindow()
         {
             InitializeComponent();
+            IsPlaying(false);
           
         }
 
+        // isPlaying for Play and pause
+        private void IsPlaying(bool value)
+        {
+            PauseBtn.IsEnabled = true;
+            StopBtn.IsEnabled = value;
+            ForBtn.IsEnabled = value;
+            BackBtn.IsEnabled = value;
+            MuteBtn.IsEnabled = value;
+
+        }
+
+        // play and pause btn
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            IsPlaying(true);
+            if (PauseBtn.Content.ToString() == "Pause")
+            {
+                ME1.Pause();
+                PauseBtn.Content = "Play";
+            }
+            else
+            {
+                ME1.Play();
+                PauseBtn.Content = "Pause";
+            }
+            VolSlider.Value = ME1.Volume;
+        }
+        // stop btn 
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ME1.Stop();
+            PauseBtn.Content = "Play";
+        }
+
+        // FW and BW btns
+        private void ForBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ME1.Position = ME1.Position + TimeSpan.FromSeconds(10);
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ME1.Position = ME1.Position - TimeSpan.FromSeconds(10);
+            //ME1.IsMuted = true;
+
+        }
+        //volSlider
+        private void ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ME1.Volume = e.NewValue;
+        }
+        //mute btn
+        private void MuteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MuteBtn.Content.ToString() == "Mute")
+            {
+                ME1.IsMuted = true;
+                MuteBtn.Content = "Unmute";
+            }
+            else
+            {
+                ME1.IsMuted = false;
+                MuteBtn.Content = "Mute";
+            }
+        }
 
         StreamReader FileReader; 
         string line;
@@ -126,6 +192,11 @@ namespace Kreza
             }
 
             FileReader.Close();//Closing the access
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
        
