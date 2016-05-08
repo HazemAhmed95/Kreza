@@ -16,36 +16,40 @@ namespace Kreza
         HashSet<string> Set = new HashSet<string>(); //Helper HashSet.
 
         //Recursive function for searching all the windows.
-        public void SearchDirectory(string path)
+        public Task SearchDirectory(string path)
         {
-            try
+            return Task.Factory.StartNew(() =>
             {
-                //Getting all the files with the ".mp3" extension in the drive.
-                foreach (string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
+                try
                 {
-                    string SongName = Path.GetFileName(SongPath);
-                    string SongData = GettingSongData(SongPath);
-
-                    //Putting the SongData to the list if it's not already put.
-                    if (!Set.Contains(SongName))
+                    //Getting all the files with the ".mp3" extension in the drive.
+                    foreach (string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
                     {
-                        NewSongs.Add(SongData);
-                        Set.Add(SongName);
+                        string SongName = Path.GetFileName(SongPath);
+                        string SongData = GettingSongData(SongPath);
+
+                        //Putting the SongData to the list if it's not already put.
+                        if (!Set.Contains(SongName))
+                        {
+                            NewSongs.Add(SongData);
+                            Set.Add(SongName);
+                            ((MainWindow)System.Windows.Application.Current.MainWindow).SongsList.Items.Add(SongName); // accessing main window to add the songs in the song list
+                        }
+                    }
+
+                    //Searching the sub directories.
+                    foreach (string sDir in Directory.EnumerateDirectories(path))
+                    {
+                        SearchDirectory(sDir);
                     }
                 }
 
-                //Searching the sub directories.
-                foreach (string sDir in Directory.EnumerateDirectories(path))
+                catch (Exception)
                 {
-                    SearchDirectory(sDir);
+
                 }
-            }
-
-            catch (Exception)
-            {
-
-            }
-            AddNewSongsToFile(NewSongs);
+                AddNewSongsToFile(NewSongs);
+            });
         }
         //A method that takes Song Path and returns it's data.
         private string GettingSongData(string SongPath)

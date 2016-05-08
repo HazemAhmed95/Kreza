@@ -128,7 +128,7 @@ namespace Kreza
             FileReader.Close();//Closing the file.
         }
 
-        private void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
+        private async void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -138,7 +138,7 @@ namespace Kreza
             {
                 string filename = openFileDialog.FileName;
                 string path = System.IO.Path.GetDirectoryName(filename);
-                sr.SearchDirectory(path);      //Searching in directory and subdirectories.
+               await sr.SearchDirectory(path);      //Searching in directory and subdirectories.
 
             }
         }
