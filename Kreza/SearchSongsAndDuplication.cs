@@ -16,54 +16,48 @@ namespace Kreza
         HashSet<string> Set = new HashSet<string>(); //Helper HashSet.
 
         //Recursive function for searching all the windows.
-        public Task SearchDirectory(string path)
+        public void SearchDirectory(string path)
         {
-            return Task.Factory.StartNew(() =>
+            try
             {
-                try
+                //Getting all the files with the ".mp3" extension in the drive.
+                foreach (string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
                 {
-                    //Getting all the files with the ".mp3" extension in the drive.
-                    foreach (string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
-                    {
-                        string SongName = Path.GetFileName(SongPath);
-                        string SongData = GettingSongData(SongPath);
+                    string SongName = Path.GetFileName(SongPath);
+                    string SongData = GettingSongData(SongPath);
 
-                        //Putting the SongData to the list if it's not already put.
-                        if (!Set.Contains(SongName))
-                        {
-                            NewSongs.Add(SongData);
-                            Set.Add(SongName);
-                            ((MainWindow)System.Windows.Application.Current.MainWindow).SongsList.Items.Add(SongName); // accessing main window to add the songs in the song list
-                        }
-                    }
-
-                    //Searching the sub directories.
-                    foreach (string sDir in Directory.EnumerateDirectories(path))
+                    //Putting the SongData to the list if it's not already put.
+                    if (!Set.Contains(SongName))
                     {
-                        SearchDirectory(sDir);
+                        NewSongs.Add(SongData);
+                        Set.Add(SongName);
                     }
                 }
 
-                catch (Exception)
+                //Searching the sub directories.
+                foreach (string sDir in Directory.EnumerateDirectories(path))
                 {
-
+                    SearchDirectory(sDir);
                 }
-                AddNewSongsToFile(NewSongs);
-            });
+            }
+
+            catch (Exception)
+            {
+
+            }
+            AddNewSongsToFile(NewSongs);
         }
         //A method that takes Song Path and returns it's data.
         private string GettingSongData(string SongPath)
         {
             string SongName = Path.GetFileName(SongPath);
 
-            
+
 
             TagLib.File tagFile = TagLib.File.Create(SongPath);
 
             string artist = tagFile.Tag.FirstAlbumArtist;
-            IPicture newArt = new Picture(SongPath);
-            tagFile.Tag.Pictures = new IPicture[1] { newArt };
-            tagFile.Save();
+           
             if (String.IsNullOrWhiteSpace(artist))
             {
                 artist = "Unknown";
@@ -77,7 +71,7 @@ namespace Kreza
             return SongData;
         }
 
-     
+
         //A method to add the new songs to All Songs file and handling Duplication
         public void AddNewSongsToFile(List<string> NewSongs)
         {
@@ -111,7 +105,5 @@ namespace Kreza
             fs.Close();
         }
     }
-   
-    
 }
-    
+

@@ -4,49 +4,22 @@
         Title="KAREZA"  Height="504" Width="705" Background="#FFD6DBE9">
     <Grid  >
         <Grid.Background>
-            <SolidColorBrush Color="Black"/>
+            <ImageBrush ImageSource="/Assets/Background.png" />
         </Grid.Background>
 
 
-        <Menu IsMainMenu="True" VerticalAlignment="Top"  Height="25"  RenderTransformOrigin="0.501,0.933" Background="{x:Null}">
-            <MenuItem   Header="_FILE" FontWeight="Bold" AllowDrop="True" Foreground="White" Height="30"  RenderTransformOrigin="0.567,0.489" >
-                <MenuItem Click="OpeningFileDialog" Header=" _Open Song" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Exit" Foreground="Black"/>
-
-            </MenuItem>
-            <MenuItem Height="25" Header="_LIBRARY" FontWeight="Bold" AllowDrop="True" Foreground="White">
-                <MenuItem Header=" _View All Songs" Click="ViewAllSongs" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Add PlayList" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Open PlayList" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Edit PlayList" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Add" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Delet" Foreground="Black"/>
-                <Separator/>
-                <MenuItem Header=" _Delet All" Foreground="Black"/>
-
-            </MenuItem>
-            <MediaElement  Name="ME1" Source=""></MediaElement>
-
-            <MenuItem Header="_ABOUT" FontWeight="Bold"  Height="30" Foreground="White"/>
-        </Menu>
-        <Slider HorizontalAlignment="Left" Margin="215,415,0,0" VerticalAlignment="Top" Width="472" Value="0.1" Maximum="10" Height="17"/>
-        <TextBlock HorizontalAlignment="Left" Margin="37,46,0,0" TextWrapping="Wrap" Text="Songs" VerticalAlignment="Top"/>
-
-        <ListBox Background="Black" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="Green" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="10,67,0,107.4" VerticalAlignment="Center" Width="169" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
+        <TextBlock Height="20" Text="Songs" Foreground="White" MouseDown="ViewAllSongs" Margin="42,157,615.4,297.4"/>
+        <MediaElement Width="1" Height="1" Opacity="0" Name="ME1" Source=""></MediaElement>
+        <TextBlock Text="Open Songs" Foreground="White" MouseDown="OpeningFileDialog" Margin="42,286,577.4,166.4"/>
+        <ListBox Background="#151123" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="#151123" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="506,98,0,76.4" VerticalAlignment="Center" Width="169" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
         <Image  Name="AlbumArt" Margin="282,98,197.4,159.4"/>
         <Button Name="PauseBtn"  Content="Play" HorizontalAlignment="Left" Margin="393,437,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
         <Button Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="282,437,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
         <Button Name="ForBtn" Content="Forword" HorizontalAlignment="Left" Margin="503,437,0,0" VerticalAlignment="Top" Width="75" Click="ForBtn_Click"/>
         <Button Name="BackBtn" Content="Backword" HorizontalAlignment="Left" Margin="178,437,0,0" VerticalAlignment="Top" Width="75" Click="BackBtn_Click"/>
-        <Button Name="MuteBtn" Content="Mute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="55" Margin="590,64,0,0" Click="MuteBtn_Click"/>
-        <Slider Name="VolSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Value=".6" Margin="362,66,0,0" Width="154"  Minimum="0" Maximum="1" ValueChanged="ValueChanged"/>
+        <Button Name="MuteBtn" Content="Mute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="600,437,0,0" Click="MuteBtn_Click"/>
 
-        <Label Content="Volume     0                                                    100" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="282,58,0,0"/>
+
+
     </Grid>
 </Window>

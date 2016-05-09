@@ -31,7 +31,7 @@ namespace Kreza
             IsPlaying(false);
 
         }
-
+        HashSet<string> Set = new HashSet<string>();
         // isPlaying for Play and pause
         private void IsPlaying(bool value)
         {
@@ -57,7 +57,7 @@ namespace Kreza
                 ME1.LoadedBehavior = MediaState.Play;
                 PauseBtn.Content = "Pause";
             }
-            VolSlider.Value = ME1.Volume;
+           
         }
         // stop btn 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
@@ -122,13 +122,18 @@ namespace Kreza
                     }
                 }
                 splitter[0] = splitter[0].Substring(0, cutter);
-                SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
+                if (!Set.Contains(splitter[0])) 
+                {
+                    Set.Add(splitter[0]);
+                    SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
+                }
+                
             }
 
             FileReader.Close();//Closing the file.
         }
 
-        private async void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
+        private  void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -138,7 +143,7 @@ namespace Kreza
             {
                 string filename = openFileDialog.FileName;
                 string path = System.IO.Path.GetDirectoryName(filename);
-               await sr.SearchDirectory(path);      //Searching in directory and subdirectories.
+               sr.SearchDirectory(path);      //Searching in directory and subdirectories.
 
             }
         }
@@ -188,10 +193,7 @@ namespace Kreza
             FileReader.Close();//Closing the access
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
 
 

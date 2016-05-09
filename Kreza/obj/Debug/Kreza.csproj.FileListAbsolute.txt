@@ -101,3 +101,5 @@ C:\Users\Kareem\Documents\Kareza\Kreza\bin\Debug\Kreza.pdb
 C:\Users\Kareem\Documents\Kareza\Kreza\bin\Debug\policy.2.0.taglib-sharp.dll
 C:\Users\Kareem\Documents\Kareza\Kreza\bin\Debug\taglib-sharp.dll
 C:\Users\Kareem\Documents\Kareza\Kreza\bin\Debug\policy.2.0.taglib-sharp.config
+E:\Project\Kreza\obj\Debug\waittingBar.baml
+E:\Project\Kreza\obj\Debug\waittingBar.g.cs
