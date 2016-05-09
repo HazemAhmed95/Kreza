@@ -7,19 +7,40 @@
             <ImageBrush ImageSource="/Assets/Background.png" />
         </Grid.Background>
 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="156*"/>
+                <RowDefinition Height="196*"/>
+                <RowDefinition Height="121*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="37*"/>
+                <ColumnDefinition Width="106*"/>
+                <ColumnDefinition Width="183*"/>
+                <ColumnDefinition Width="223*"/>
+                <ColumnDefinition Width="148*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1"  >
+                <TextBlock FontSize="15" Height="26" Text="Songs" Foreground="White" MouseDown="ViewAllSongs"/>
+                <TextBlock FontSize="15" Height="26" Text="Open Songs" Foreground="White" MouseDown="OpeningFileDialog" />
+                <TextBlock FontSize="15" Height="26" Text="Albums" Foreground="White" />
+                <TextBlock FontSize="15" Height="26" Text="Artist" Foreground="White"  />
+                <TextBlock FontSize="15" Height="26" Text="Playlists" Foreground="White" />
+                <TextBlock FontSize="15" Height="26" Text="ay7aga" Foreground="White"  />
+                <TextBlock FontSize="15" Height="26" Text="About" Foreground="White"  />
 
-        <TextBlock Height="20" Text="Songs" Foreground="White" MouseDown="ViewAllSongs" Margin="42,157,615.4,297.4"/>
-        <MediaElement Width="1" Height="1" Opacity="0" Name="ME1" Source=""></MediaElement>
-        <TextBlock Text="Open Songs" Foreground="White" MouseDown="OpeningFileDialog" Margin="42,286,577.4,166.4"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="2">
+                <Image  Name="AlbumArt"/>
+                <Image Name="StopBtn"     Width="50" Height="50" Source="/assets/backward.png" MouseDown="Button_Click_1"/>
+                <Image x:Name="PauseBtn"     Width="75" Height="75" Source="/assets/pause.png" MouseDown="ForBtn_Click"/>
+                <Image Name="BackBtn"     Width="50" Height="50" Source="/assets/forward.png" MouseDown="BackBtn_Click"/>
+
+            </StackPanel>
+        </Grid>
+
+        <MediaElement Volume="100" Width="1" Height="1" Opacity="0" Name="ME1" Source=""></MediaElement>
         <ListBox Background="#151123" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public" BorderBrush="#151123" Name="SongsList" HorizontalAlignment="Left" Height="300" Margin="506,98,0,76.4" VerticalAlignment="Center" Width="169" Grid.Column="0"  SelectionMode="Single" FontFamily="Papyrus"/>
-        <Image  Name="AlbumArt" Margin="282,98,197.4,159.4"/>
-        <Button Name="PauseBtn"  Content="Play" HorizontalAlignment="Left" Margin="393,437,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-        <Button Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="282,437,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
-        <Button Name="ForBtn" Content="Forword" HorizontalAlignment="Left" Margin="503,437,0,0" VerticalAlignment="Top" Width="75" Click="ForBtn_Click"/>
-        <Button Name="BackBtn" Content="Backword" HorizontalAlignment="Left" Margin="178,437,0,0" VerticalAlignment="Top" Width="75" Click="BackBtn_Click"/>
-        <Button Name="MuteBtn" Content="Mute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="600,437,0,0" Click="MuteBtn_Click"/>
-
-
 
     </Grid>
 </Window>

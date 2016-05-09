@@ -4,16 +4,28 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
+C:\Users\Asus  Tp5400\Desktop\Kreza\Kreza\obj\Debug\
+=======
 C:\Users\Kareem\Documents\koko\Kreza\obj\Debug\
+>>>>>>> cf0e91e0d663e527da0dc8633364e4d01a838924
 Kreza
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
+C:\Users\Asus  Tp5400\Desktop\Kreza\Kreza\App.xaml
+22067230116
+
+7-1460317624
+14-1914761695
+=======
 C:\Users\Kareem\Documents\koko\Kreza\App.xaml
 22067230116
 
 7-1460317624
 14708367612
+>>>>>>> cf0e91e0d663e527da0dc8633364e4d01a838924
 MainWindow.xaml;waittingBar.xaml;
 
 False
