@@ -31,6 +31,7 @@ namespace Kreza
                     {
                         NewSongs.Add(SongData);
                         Set.Add(SongName);
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).SongsList.Items.Add(SongName); // accessing main window to add the songs in the song list
                     }
                 }
 
