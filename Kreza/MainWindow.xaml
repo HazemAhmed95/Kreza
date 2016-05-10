@@ -16,10 +16,10 @@
                 <Grid.RowDefinitions>
 
                     <RowDefinition Height="33*"/>
-                    <RowDefinition Height="21*"/>
+                    <RowDefinition Height="22*"/>
                     <RowDefinition Height="45*"/>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition Height="54*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="42*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
 
@@ -30,42 +30,168 @@
 
                     <ColumnDefinition Width="82*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel  HorizontalAlignment="Center" Orientation="Vertical" Grid.Row="2"  Grid.RowSpan="3" Width="46" Margin="0,0.4,0.4,-0.4"  >
+                <StackPanel  HorizontalAlignment="Center" Orientation="Vertical" Grid.Row="2"  Grid.RowSpan="3" Width="46" Margin="0,0.8,0.4,-0.4"  >
 
                     <StackPanel Orientation="Horizontal">
                         <Image Width="8" Height="10" Source="/Assets/open-archive.png"></Image>
-                        <TextBlock FontSize="5" Height="8" Text=" Open Songs" Foreground="White" MouseDown="OpeningFileDialog" />
+                        <TextBlock FontSize="5" Height="8" Text=" Open Songs" Foreground="White" MouseDown="OpeningFileDialog">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="100" BlurRadius="2"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </StackPanel>
                     <Separator Opacity="0" Height="2"/>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="8" Height="10" Source="/Assets/headphones.png"></Image>
-                        <TextBlock FontSize="5" Height="8" Text="  Songs" Foreground="White" MouseDown="ViewAllSongs"/>
+                        <TextBlock FontSize="5" Height="8" Text="  Songs" Foreground="White" MouseDown="ViewAllSongs">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="100" BlurRadius="2"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </StackPanel>
                     <Separator Opacity="0" Height="2"/>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="8" Height="10" Source="/Assets/cd.png"></Image>
-                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  Albums" Foreground="White" />
+                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  Albums" Foreground="White" >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="100" BlurRadius="2"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </StackPanel>
                     <Separator Opacity="0" Height="2"/>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="8" Height="10" Source="/Assets/song-playlist.png"></Image>
-                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  Playlist" Foreground="White" />
+                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  Playlist" Foreground="White" >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="100" BlurRadius="2"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
                     </StackPanel>
                     <Separator Opacity="0" Height="2"/>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="8" Height="10" Source="/Assets/business-man-talking-about-cash-dollars.png"></Image>
-                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  About" Foreground="White" />
+                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  About" Foreground="White" >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="100" BlurRadius="2"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
                     </StackPanel>
 
                 </StackPanel>
 
-                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="142" VerticalAlignment="Center" Width="65" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" />
-                <Image Name="StopBtn" HorizontalAlignment="left" Grid.Column="2" Grid.Row="4"  Width="25" Source="/assets/backward.png" MouseDown="ForBtn_Click" />
-                <Image x:Name="PauseBtn"  Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center"   Width="30" Source="/assets/pause.png" MouseDown="PauseBtn_MouseDown"/>
-                <Image Name="BackBtn"  Grid.Column="2" Grid.Row="4"  HorizontalAlignment="Right" Width="25" Source="/assets/forward.png" MouseDown="BackBtn_Click" />
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" />
+                <Image Name="StopBtn" HorizontalAlignment="left" Grid.Column="1" Grid.Row="3"  Width="25" Source="/assets/backward.png" MouseDown="ForBtn_Click" Grid.ColumnSpan="2" Margin="24.6,12,0,-0.4" Grid.RowSpan="2">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="1" BlurRadius="20"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Image x:Name="PauseBtn"  Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center"   Width="30" Source="/assets/pause.png" MouseDown="PauseBtn_MouseDown" Margin="21.8,12,21.8,-0.4" Grid.RowSpan="2">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="Blue" Opacity="1" BlurRadius="15"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Image Name="BackBtn"  Grid.Column="2" Grid.Row="3"  HorizontalAlignment="Right" Width="25" Source="/assets/forward.png" MouseDown="BackBtn_Click" Grid.ColumnSpan="2" Margin="0,12,11.6,-0.4" Grid.RowSpan="2">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="Blue" Opacity="1" BlurRadius="20"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
 
+                <TextBlock Name="textSong" Foreground="#23abf9" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="1" FontSize="4"  VerticalAlignment="Center" ></TextBlock>
+                <TextBlock Name="ArtistName"  Foreground="#23abf9" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="1" FontSize="4"  VerticalAlignment="Bottom" ></TextBlock>
 
-                <Image Source="/assets/Thumb.png" Name="AlbumArt" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" />
+                <Image   Source="/assets/Thumb.png" Name="AlbumArt" Grid.Column="2" Grid.RowSpan="2" Grid.Row="1"  >
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="Blue" Opacity="1" BlurRadius="2"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
             </Grid>
         </Viewbox>
         <MediaElement Volume="100" Width="1" Height="1" Opacity="0" Name="ME1" Source=""></MediaElement>

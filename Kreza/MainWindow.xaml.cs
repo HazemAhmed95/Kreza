@@ -52,8 +52,16 @@ namespace Kreza
 
         private void ViewAllSongs(object sender, RoutedEventArgs e)//Viewing all songs.
         {
-            FileReader = new StreamReader("All Songs.txt");//Accessing AllSongs file.
+            if (System.IO.File.Exists("All Songs.txt"))
+            {
+                FileReader = new StreamReader("All Songs.txt");//Accessing AllSongs file.
+            }
+            else
+            {
 
+                System.Windows.MessageBox.Show("There is no Music Added.");
+                return;
+            }
             string line;
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
@@ -98,12 +106,15 @@ namespace Kreza
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Double clicked items.
         {
             string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
+            textSong.Text = Selected;
             Selected = Selected + ".mp3";
 
             string SelectedSongPath = sr.GetPath(Selected);
 
             Uri path = new Uri(SelectedSongPath);//Giving it its path
             ME1.Source = path;
+            
+            
             ME1.LoadedBehavior = MediaState.Play; //play the song.
 
             try
