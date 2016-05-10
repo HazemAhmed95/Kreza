@@ -28,7 +28,7 @@ namespace Kreza
         public MainWindow()
         {
             InitializeComponent();
-           
+
 
         }
         HashSet<string> Set = new HashSet<string>(); //Helper Set 
@@ -60,7 +60,7 @@ namespace Kreza
             ME1.Position = ME1.Position - TimeSpan.FromSeconds(10); // gets the position of the ME1 and seeks 10 sec backwards
         }
 
-        
+
         StreamReader FileReader;
 
         SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
@@ -80,30 +80,21 @@ namespace Kreza
             string line;
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
-                string[] splitter = line.Split('|');
-
-                int cutter = 0;
-                for (int i = 0; i < splitter[0].Length; i++)
-                {
-                    if (splitter[0][i] == '.' && splitter[0][i + 3] == '3')
-                    {
-                        cutter = i;
-                        break;
-                    }
-                }
-                splitter[0] = splitter[0].Substring(0, cutter);
+                string[] splitter = Cutter(line);
+                
                 if (!Set.Contains(splitter[0]))
                 {
                     Set.Add(splitter[0]);
                     SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
+
                 }
-                
+
             }
 
             FileReader.Close();//Closing the file.
         }
 
-        private  void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
+        private void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -152,8 +143,73 @@ namespace Kreza
                 AlbumArt.Source = image;
             }
         }
+        /// <summary>
+        ///  Event: Search
+        ///  Triger : any Key 
+        /// This event search using the song name as an input it searches in all songs if the input matches some parts of the whole song(s) name
+        /// the matched song(s) will be added to the current played song list
+        /// </summary>
 
-     
+        private void SearchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+            SongsList.Items.Clear(); //Clear the list to remove the dismatched songs 
+          
+            if (System.IO.File.Exists("All Songs.txt"))
+            {
+                FileReader = new StreamReader("All Songs.txt");//Accessing AllSongs file.
+            }
+            else
+            {
+
+                System.Windows.MessageBox.Show("There is no Music Added.");
+                return;
+            }
+
+            string line;
+            while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
+            {
+                string[] splitter = Cutter(line);
+        
+
+                if (splitter[0].ToLower().Contains(SearchBar.Text.ToLower()))
+                {
+                    Set.Add(splitter[0]);
+                    SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
+
+                }
+
+            }
+
+
+
+        }
+
+        /// <summary>
+        ///  Method: Cutter
+        ///  Split the line into (song info ) into an array of strings
+        ///  and Cut the .mp3 part from the song name
+        /// </summary>
+        ///   Single parameter.
+        /// <param name="Line">A String contain the song data and a dilmeter .</param>
+        /// <returns>Array of strings contain the song data.</returns>
+        private string[] Cutter(string line)
+        {
+
+            string[] splitter = line.Split('|'); //Split the line
+
+            int cutter = 0;
+            for (int i = 0; i < splitter[0].Length; i++) //Cut the .mp3 part
+            {
+                if (splitter[0][i] == '.' && splitter[0][i + 3] == '3')
+                {
+                    cutter = i;
+                    break;
+                }
+            }
+            splitter[0] = splitter[0].Substring(0, cutter);
+
+            return splitter;
+        }
 
     }
 }

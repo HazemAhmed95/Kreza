@@ -123,8 +123,9 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style></TextBlock>
+                       
                     </StackPanel>
-
+                    <TextBox x:Name="SearchBar" Margin="0,6,0,0"  Height="11" Text="Search" FontSize="6" KeyDown="SearchBar_KeyDown"  />
                 </StackPanel>
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" />
