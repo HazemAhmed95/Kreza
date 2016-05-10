@@ -28,45 +28,15 @@ namespace Kreza
         public MainWindow()
         {
             InitializeComponent();
-            IsPlaying(false);
+           
 
         }
         HashSet<string> Set = new HashSet<string>();
         // isPlaying for Play and pause
-        private void IsPlaying(bool value)
-        {
-            PauseBtn.IsEnabled = value;
-            StopBtn.IsEnabled = value;
-           // ForBtn.IsEnabled = value;
-            BackBtn.IsEnabled = value;
-            MuteBtn.IsEnabled = value;
-
-        }
+       
 
         // play and pause btn
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            IsPlaying(true);
-            if (PauseBtn.Source = "/assets/pause.png")
-            {
-                ME1.LoadedBehavior = MediaState.Pause;
-                PauseBtn.Content = "Play";
-            }
-            else
-            {
-                ME1.LoadedBehavior = MediaState.Play;
-                PauseBtn.Content = "Pause";
-            }
-           
-        }
-        // stop button 
-       /* private void StopBtn_Click(object sender, RoutedEventArgs e)
-        {
-            ME1.LoadedBehavior = MediaState.Stop;
-            PauseBtn.Content = "Play";
-        }
-        */
-        // forward and backward btns
+     
         private void ForBtn_Click(object sender, RoutedEventArgs e)
         {
             ME1.Position = ME1.Position + TimeSpan.FromSeconds(10);
@@ -78,25 +48,7 @@ namespace Kreza
 
         }
         
-     /*   private void ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ME1.Volume = e.NewValue;
-        }
-        */
-       /* private void MuteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (MuteBtn.Content.ToString() == "Mute")
-            {
-                ME1.IsMuted = true;
-                MuteBtn.Content = "Unmute";
-            }
-            else
-            {
-                ME1.IsMuted = false;
-                MuteBtn.Content = "Mute";
-            }
-        }
-        */
+    
         StreamReader FileReader;
         string line;
 
@@ -151,8 +103,7 @@ namespace Kreza
 
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Double clicked items.
         {
-            IsPlaying(true);
-            PauseBtn.Content = "Pause";
+          
             string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
             Selected = Selected + ".mp3";
             FileReader = new StreamReader("All Songs.txt");//Accessing the file
@@ -192,6 +143,11 @@ namespace Kreza
             }
 
             FileReader.Close();//Closing the access
+        }
+
+        private void PauseBtn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
 
         

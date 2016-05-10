@@ -122,6 +122,16 @@
     <Resource Include="Assets\pause.png" />
     <Resource Include="Assets\play.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\bg without anything.png" />
+    <Resource Include="Assets\business-man-talking-about-cash-dollars.png" />
+    <Resource Include="Assets\cd.png" />
+    <Resource Include="Assets\Emplty side menu.png" />
+    <Resource Include="Assets\headphones.png" />
+    <Resource Include="Assets\open-archive.png" />
+    <Resource Include="Assets\song-playlist.png" />
+    <Resource Include="Assets\Thumb.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
