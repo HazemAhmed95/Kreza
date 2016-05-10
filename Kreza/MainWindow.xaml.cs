@@ -31,9 +31,7 @@ namespace Kreza
            
 
         }
-        HashSet<string> Set = new HashSet<string>();
-        // isPlaying for Play and pause
-       
+        HashSet<string> Set = new HashSet<string>(); //Helper Set 
 
         // play and pause btn
      
@@ -48,10 +46,7 @@ namespace Kreza
 
         }
         
-    
         StreamReader FileReader;
-        string line;
-
 
         SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
 
@@ -59,6 +54,7 @@ namespace Kreza
         {
             FileReader = new StreamReader("All Songs.txt");//Accessing AllSongs file.
 
+            string line;
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
                 string[] splitter = line.Split('|');
@@ -66,14 +62,14 @@ namespace Kreza
                 int cutter = 0;
                 for (int i = 0; i < splitter[0].Length; i++)
                 {
-                    if (splitter[0][i] == '.' && splitter[0][i + 1] == 'm')
+                    if (splitter[0][i] == '.' && splitter[0][i + 3] == '3')
                     {
                         cutter = i;
                         break;
                     }
                 }
                 splitter[0] = splitter[0].Substring(0, cutter);
-                if (!Set.Contains(splitter[0])) 
+                if (!Set.Contains(splitter[0]))
                 {
                     Set.Add(splitter[0]);
                     SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
@@ -94,67 +90,47 @@ namespace Kreza
             {
                 string filename = openFileDialog.FileName;
                 string path = System.IO.Path.GetDirectoryName(filename);
-               sr.SearchDirectory(path);      //Searching in directory and subdirectories.
-
+                sr.SearchDirectory(path);      //Searching in directory and subdirectories.
             }
         }
 
 
-
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Double clicked items.
         {
-          
             string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
             Selected = Selected + ".mp3";
-            FileReader = new StreamReader("All Songs.txt");//Accessing the file
 
-            while ((line = FileReader.ReadLine()) != null)
-            {
-                string[] splitter = line.Split('|');//Splitting the line to 3 fields
+            string SelectedSongPath = sr.GetPath(Selected);
 
-                if (Selected.Contains(splitter[0]))//checking if the the name of the songs simialer to selected item or not
-                {
-                    Uri path = new Uri(splitter[3]);//Giving it it's path
-                    ME1.Source = path;
-                    ME1.LoadedBehavior = MediaState.Play; //play the song.
+            Uri path = new Uri(SelectedSongPath);//Giving it its path
+            ME1.Source = path;
+            ME1.LoadedBehavior = MediaState.Play; //play the song.
 
-                    try
-                    { //Getting the Album art source
-                        TagLib.File tagFile = TagLib.File.Create(splitter[3]);
-                        TagLib.IPicture pic = tagFile.Tag.Pictures[0];
-                        MemoryStream ms = new MemoryStream(pic.Data.Data);
-                        ms.Seek(0, SeekOrigin.Begin);
+            try
+            { //Getting the Album art source
+                TagLib.File tagFile = TagLib.File.Create(SelectedSongPath);
+                TagLib.IPicture pic = tagFile.Tag.Pictures[0];
+                MemoryStream ms = new MemoryStream(pic.Data.Data);
+                ms.Seek(0, SeekOrigin.Begin);
+                // ImageSource 
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = ms;
+                bitmap.EndInit();
 
-                        // ImageSource 
-                        BitmapImage bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.StreamSource = ms;
-                        bitmap.EndInit();
-
-
-                        AlbumArt.Source = bitmap;
-                    }
-                    catch (Exception)// exception if there is no Album art.
-                    {
-                        BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
-                        AlbumArt.Source = image;
-                    }
-                }
+                AlbumArt.Source = bitmap;
             }
-
-            FileReader.Close();//Closing the access
+            catch (Exception)//exception if there is no Album art.
+            {
+                BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
+                AlbumArt.Source = image;
+            }
         }
 
         private void PauseBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
             
         }
-
-        
-
-
-
-
 
     }
 }
