@@ -33,18 +33,33 @@ namespace Kreza
         }
         HashSet<string> Set = new HashSet<string>(); //Helper Set 
 
-        // play and pause btn
-     
-        private void ForBtn_Click(object sender, RoutedEventArgs e)
+        // play and pause buttons
+        private void PauseBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ME1.Position = ME1.Position + TimeSpan.FromSeconds(10);
+
+            ME1.LoadedBehavior = MediaState.Pause; // to Pause the MediaElement 
+            PauseBtn.Visibility = Visibility.Collapsed; // this to change the visibitly of the Pause button
+            PlayBtn.Visibility = Visibility.Visible;  // this to change the visibitly of the play button
         }
 
-        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        private void PlayBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ME1.Position = ME1.Position - TimeSpan.FromSeconds(10);
 
+            ME1.LoadedBehavior = MediaState.Play;
+            PlayBtn.Visibility = Visibility.Collapsed;
+            PauseBtn.Visibility = Visibility.Visible;
         }
+
+        private void ForBtn_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            ME1.Position = ME1.Position + TimeSpan.FromSeconds(10); // gets the position of the ME1 and seeks 10 secs forward
+        }
+
+        private void BackBtn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ME1.Position = ME1.Position - TimeSpan.FromSeconds(10); // gets the position of the ME1 and seeks 10 sec backwards
+        }
+
         
         StreamReader FileReader;
 
@@ -113,8 +128,8 @@ namespace Kreza
 
             Uri path = new Uri(SelectedSongPath);//Giving it its path
             ME1.Source = path;
-            
-            
+
+
             ME1.LoadedBehavior = MediaState.Play; //play the song.
 
             try
@@ -138,10 +153,7 @@ namespace Kreza
             }
         }
 
-        private void PauseBtn_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
+     
 
     }
 }
