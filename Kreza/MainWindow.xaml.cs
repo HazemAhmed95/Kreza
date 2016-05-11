@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using TagLib;
+using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 
 
 namespace Kreza
@@ -31,6 +33,7 @@ namespace Kreza
 
 
         }
+      
         HashSet<string> Set = new HashSet<string>(); //Helper Set 
 
         // play and pause buttons
@@ -52,12 +55,12 @@ namespace Kreza
 
         private void ForBtn_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
-            ME1.Position = ME1.Position + TimeSpan.FromSeconds(10); // gets the position of the ME1 and seeks 10 secs forward
+            PlayNextSong(); 
         }
 
         private void BackBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ME1.Position = ME1.Position - TimeSpan.FromSeconds(10); // gets the position of the ME1 and seeks 10 sec backwards
+            PreviousSong();
         }
 
 
@@ -109,40 +112,56 @@ namespace Kreza
         }
 
 
-        private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Double clicked items.
+        private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Play the item
         {
-            string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
-            textSong.Text = Selected;
-            Selected = Selected + ".mp3";
-
-            string SelectedSongPath = sr.GetPath(Selected);
-
-            Uri path = new Uri(SelectedSongPath);//Giving it its path
-            ME1.Source = path;
-
-
-            ME1.LoadedBehavior = MediaState.Play; //play the song.
-
-            try
-            { //Getting the Album art source
-                TagLib.File tagFile = TagLib.File.Create(SelectedSongPath);
-                TagLib.IPicture pic = tagFile.Tag.Pictures[0];
-                MemoryStream ms = new MemoryStream(pic.Data.Data);
-                ms.Seek(0, SeekOrigin.Begin);
-                // ImageSource 
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = ms;
-                bitmap.EndInit();
-
-                AlbumArt.Source = bitmap;
-            }
-            catch (Exception)//exception if there is no Album art.
-            {
-                BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
-                AlbumArt.Source = image;
-            }
+            PlaySelectedSong();            
         }
+        private void PlaySelectedSong()
+        {
+            if (SongsList.SelectedItem.ToString() != null)
+            {
+                string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
+                textSong.Text = Selected;
+                Selected = Selected + ".mp3";
+                string SelectedSongPath = sr.GetPath(Selected);
+                Uri path = new Uri(SelectedSongPath);//Giving it its path
+                ME1.Source = path;
+                ME1.LoadedBehavior = MediaState.Play; //play the song.
+            }
+            TimeThiker();
+            SetAlbumArt();
+            
+        }
+        void TimeThiker() 
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
+        }
+        private void PlayNextSong()
+        {
+            if ((SongsList.SelectedIndex + 1) < SongsList.Items.Count)
+            {
+                SongsList.SelectedItem = SongsList.Items[(SongsList.SelectedIndex + 1)];
+            }
+            else
+            {
+                SongsList.SelectedItem = SongsList.Items[0];
+            }
+            PlaySelectedSong();
+        }
+
+        private void PreviousSong()
+        {
+            if (SongsList.SelectedIndex!=0)
+            {
+                SongsList.SelectedItem = SongsList.Items[SongsList.SelectedIndex - 1];
+            }
+                
+                PlaySelectedSong();
+        }
+       
         /// <summary>
         ///  Event: Search
         ///  Triger : any Key 
@@ -210,6 +229,57 @@ namespace Kreza
 
             return splitter;
         }
+        private bool userIsDraggingSlider = false;
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if ((ME1.Source != null) && (ME1.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
+            {
+                sliProgress.Minimum = 0;
+                sliProgress.Maximum = ME1.NaturalDuration.TimeSpan.TotalSeconds;
+                sliProgress.Value = ME1.Position.TotalSeconds;
+            }
+        }
+        private void sliProgress_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            userIsDraggingSlider = false;
+            ME1.Position = TimeSpan.FromSeconds(sliProgress.Value);
+        }
 
+        private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            lblProgressStatus.Text = TimeSpan.FromSeconds(sliProgress.Value).ToString(@"hh\:mm\:ss");
+        }
+        private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            userIsDraggingSlider = true;
+        }
+        private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ME1.Volume += (e.Delta > 0) ? 0.1 : -0.1;
+        }
+
+        private void SetAlbumArt()
+        {
+            if (SongsList.SelectedItem.ToString() != null)
+            {
+                string getSongsPath = sr.GetPath((SongsList.SelectedItem.ToString()+".mp3"));
+                    TagLib.File tagFile = TagLib.File.Create(getSongsPath);
+                    TagLib.IPicture pic = tagFile.Tag.Pictures[0];
+                    MemoryStream ms = new MemoryStream(pic.Data.Data);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    // ImageSource 
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+
+                    AlbumArt.Source = bitmap;
+                }
+                else
+                {
+                    BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
+                    AlbumArt.Source = image;
+                }
+            }
+        }
     }
-}
