@@ -193,16 +193,7 @@
                     <StackPanel Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="1"  >
                     
                     <TextBlock Name="textSong" Foreground="#23abf9" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="1" FontSize="4"  VerticalAlignment="Center" ></TextBlock>
-                    <StatusBar >
-                      
-                        <StatusBarItem>
-                            <TextBlock FontSize="5" Name="lblProgressStatus">00:00:00</TextBlock>
-                        </StatusBarItem>
-                        <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Stretch">
-                            <Slider  Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged" />
-                        </StatusBarItem>
-               
-                    </StatusBar>
+                  
                     
                 </StackPanel>
                

@@ -57,12 +57,32 @@ namespace Kreza
         {
             PlayNextSong(); 
         }
+        private void PlayNextSong()//Move to the next song
+        {
+            if ((SongsList.SelectedIndex + 1) < SongsList.Items.Count)
+            {
+                SongsList.SelectedItem = SongsList.Items[(SongsList.SelectedIndex + 1)];
+            }
+            else
+            {
+                SongsList.SelectedItem = SongsList.Items[0];
+            }
+            PlaySelectedSong();
+        }
 
         private void BackBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
             PreviousSong();
         }
+        private void PreviousSong()//Previous song!
+        {
+            if (SongsList.SelectedIndex != 0)
+            {
+                SongsList.SelectedItem = SongsList.Items[SongsList.SelectedIndex - 1];
+            }
 
+            PlaySelectedSong();
+        }
 
         StreamReader FileReader;
 
@@ -116,7 +136,8 @@ namespace Kreza
         {
             PlaySelectedSong();            
         }
-        private void PlaySelectedSong()
+       
+        private void PlaySelectedSong()//Play the song!
         {
             if (SongsList.SelectedItem.ToString() != null)
             {
@@ -128,39 +149,14 @@ namespace Kreza
                 ME1.Source = path;
                 ME1.LoadedBehavior = MediaState.Play; //play the song.
             }
-            TimeThiker();
+            //TimeThiker();
             SetAlbumArt();
             
         }
-        void TimeThiker() 
-        {
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += timer_Tick;
-            timer.Start();
-        }
-        private void PlayNextSong()
-        {
-            if ((SongsList.SelectedIndex + 1) < SongsList.Items.Count)
-            {
-                SongsList.SelectedItem = SongsList.Items[(SongsList.SelectedIndex + 1)];
-            }
-            else
-            {
-                SongsList.SelectedItem = SongsList.Items[0];
-            }
-            PlaySelectedSong();
-        }
+        
+       
 
-        private void PreviousSong()
-        {
-            if (SongsList.SelectedIndex!=0)
-            {
-                SongsList.SelectedItem = SongsList.Items[SongsList.SelectedIndex - 1];
-            }
-                
-                PlaySelectedSong();
-        }
+       
        
         /// <summary>
         ///  Event: Search
@@ -229,40 +225,18 @@ namespace Kreza
 
             return splitter;
         }
-        private bool userIsDraggingSlider = false;
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if ((ME1.Source != null) && (ME1.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
-            {
-                sliProgress.Minimum = 0;
-                sliProgress.Maximum = ME1.NaturalDuration.TimeSpan.TotalSeconds;
-                sliProgress.Value = ME1.Position.TotalSeconds;
-            }
-        }
-        private void sliProgress_DragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            userIsDraggingSlider = false;
-            ME1.Position = TimeSpan.FromSeconds(sliProgress.Value);
-        }
+      
 
-        private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            lblProgressStatus.Text = TimeSpan.FromSeconds(sliProgress.Value).ToString(@"hh\:mm\:ss");
-        }
-        private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
-        {
-            userIsDraggingSlider = true;
-        }
-        private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ME1.Volume += (e.Delta > 0) ? 0.1 : -0.1;
-        }
-
-        private void SetAlbumArt()
+        
+       
+        private void SetAlbumArt()//Setting Album Art.
         {
             if (SongsList.SelectedItem.ToString() != null)
             {
-                string getSongsPath = sr.GetPath((SongsList.SelectedItem.ToString()+".mp3"));
+
+                try
+                {
+                    string getSongsPath = sr.GetPath((SongsList.SelectedItem.ToString() + ".mp3"));
                     TagLib.File tagFile = TagLib.File.Create(getSongsPath);
                     TagLib.IPicture pic = tagFile.Tag.Pictures[0];
                     MemoryStream ms = new MemoryStream(pic.Data.Data);
@@ -275,11 +249,14 @@ namespace Kreza
 
                     AlbumArt.Source = bitmap;
                 }
-                else
+                catch
                 {
+
                     BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
                     AlbumArt.Source = image;
+
                 }
-            }
+            }                  
+          }
         }
     }
