@@ -33,7 +33,7 @@ namespace Kreza
 
 
         }
-      
+
         HashSet<string> Set = new HashSet<string>(); //Helper Set 
 
         // play and pause buttons
@@ -43,6 +43,7 @@ namespace Kreza
             ME1.LoadedBehavior = MediaState.Pause; // to Pause the MediaElement 
             PauseBtn.Visibility = Visibility.Collapsed; // this to change the visibitly of the Pause button
             PlayBtn.Visibility = Visibility.Visible;  // this to change the visibitly of the play button
+
         }
 
         private void PlayBtn_MouseDown(object sender, MouseButtonEventArgs e)
@@ -55,7 +56,7 @@ namespace Kreza
 
         private void ForBtn_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
-            PlayNextSong(); 
+            PlayNextSong();
         }
         private void PlayNextSong()//Move to the next song
         {
@@ -104,7 +105,7 @@ namespace Kreza
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
                 string[] splitter = Cutter(line);
-                
+
                 if (!Set.Contains(splitter[0]))
                 {
                     Set.Add(splitter[0]);
@@ -131,12 +132,40 @@ namespace Kreza
             }
         }
 
+        /// <summary>
+        ///  Event: To seek MediaElement time 
+        /// 
+        /// This method allows the SeekBar Slider to get the values of the song duration and allows the user 
+        /// to control the seek time of the song
+        /// 
+        /// </summary>
+
+        private void SeekBarValues()
+        {
+            if (ME1.NaturalDuration.HasTimeSpan == true)
+            {
+                TimeSpan ts = ME1.NaturalDuration.TimeSpan;
+                SeekBar.Maximum = ts.TotalSeconds;
+                SeekBar.SmallChange = 1;
+                SeekBar.LargeChange = Math.Min(10, ts.Seconds / 10);
+            }
+           
+        }
+        private void SeekBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ME1.Position = TimeSpan.FromSeconds(SeekBar.Value);
+        }
+
+        //End of seekbar methods..
+
+
 
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Play the item
         {
-            PlaySelectedSong();            
+            PlaySelectedSong();
+            SeekBarValues();
         }
-       
+
         private void PlaySelectedSong()//Play the song!
         {
             if (SongsList.SelectedItem.ToString() != null)
@@ -148,16 +177,18 @@ namespace Kreza
                 Uri path = new Uri(SelectedSongPath);//Giving it its path
                 ME1.Source = path;
                 ME1.LoadedBehavior = MediaState.Play; //play the song.
+                
             }
             //TimeThiker();
             SetAlbumArt();
-            
-        }
-        
-       
 
-       
-       
+
+        }
+
+
+
+
+
         /// <summary>
         ///  Event: Search
         ///  Triger : any Key 
@@ -168,7 +199,7 @@ namespace Kreza
         private void SearchBar_KeyDown(object sender, KeyEventArgs e)
         {
             SongsList.Items.Clear(); //Clear the list to remove the dismatched songs 
-          
+
             if (System.IO.File.Exists("All Songs.txt"))
             {
                 FileReader = new StreamReader("All Songs.txt");//Accessing AllSongs file.
@@ -184,7 +215,7 @@ namespace Kreza
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
                 string[] splitter = Cutter(line);
-        
+
 
                 if (splitter[0].ToLower().Contains(SearchBar.Text.ToLower()))
                 {
@@ -212,6 +243,7 @@ namespace Kreza
 
             string[] splitter = line.Split('|'); //Split the line
 
+
             int cutter = 0;
             for (int i = 0; i < splitter[0].Length; i++) //Cut the .mp3 part
             {
@@ -225,10 +257,10 @@ namespace Kreza
 
             return splitter;
         }
-      
 
-        
-       
+
+
+
         private void SetAlbumArt()//Setting Album Art.
         {
             if (SongsList.SelectedItem.ToString() != null)
@@ -256,7 +288,14 @@ namespace Kreza
                     AlbumArt.Source = image;
 
                 }
-            }                  
-          }
+            }
         }
+
+        //private void SeekBar_DragOver(object sender, DragCompletedEventArgs e)
+        //{
+        //    ME1.Position = TimeSpan.FromSeconds(SeekBar.Value);
+        //}
+
+       
     }
+}
