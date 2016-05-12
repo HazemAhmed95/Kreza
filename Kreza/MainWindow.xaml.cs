@@ -111,7 +111,7 @@ namespace Kreza
 
 
 
-        private void ViewAllSongs(object sender, RoutedEventArgs e)//Viewing all songs.
+        private void ViewingAllSongs() //Viewing all songs.
         {
             if (System.IO.File.Exists("All Songs.txt"))
             {
@@ -119,10 +119,16 @@ namespace Kreza
             }
             else
             {
-
                 System.Windows.MessageBox.Show("There is no Music Added.");
                 return;
             }
+
+            if (SongsList.Items.Count != 0)
+            {
+                SongsList.Items.Clear();
+                Set.Clear();
+            }
+
             string line;
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
             {
@@ -132,13 +138,20 @@ namespace Kreza
                 {
                     Set.Add(splitter[0]);
                     SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
-
                 }
-
             }
 
             FileReader.Close();//Closing the file.
         }
+
+        private void ViewAllSongs(object sender, RoutedEventArgs e)//Viewing all songs event.
+        {
+            Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            SongsList.Visibility = Visibility.Visible;
+            ViewingAllSongs();
+        }
+
         /// <summary>
         /// Method : Open the songs
         /// Open dialog to get the songs and add them to the file
@@ -182,9 +195,12 @@ namespace Kreza
             if (SongsList.SelectedItem.ToString() != null)
             {
                 string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
-                // textSong.Text = Selected;
                 Selected = Selected + ".mp3";
                 string SelectedSongPath = sr.GetPath(Selected);
+                if (SelectedSongPath.Equals("-1"))
+                {
+                    return;
+                }
                 Uri path = new Uri(SelectedSongPath);//Giving it its path
                 ME1.Source = path;
                 ME1.LoadedBehavior = MediaState.Play; //play the song.
@@ -193,10 +209,6 @@ namespace Kreza
             SetAlbumArt();
 
         }
-
-
-
-
 
         /// <summary>
         ///  Event: Search
@@ -342,6 +354,166 @@ namespace Kreza
         private void ME1_MediaEnded(object sender, RoutedEventArgs e)
         {
             PlayNextSong();
+        }
+
+        private void Remove_Song(object sender, RoutedEventArgs e) //Remove a song from the ListBox
+        {
+            SongsList.Items.RemoveAt(SongsList.Items.IndexOf(SongsList.SelectedItem));
+            /*
+                To be handeled :-
+                The song is just removed from the ListBox, They are still on the file, ie , when the user 
+                clicks on songs the song will be added again.
+                soluion : take all what's in the file in a list , except the item that we want to remove, clear the file and 
+                fill it again with the list content. 7ad ye3melha mekasel :D 
+             */
+        }
+
+
+        //------------------------------------------------------------------------------------
+        //                                    PlayLists
+        //------------------------------------------------------------------------------------
+        private bool ExistInFile(string Search, string FilePath) //Check if a string exitsts in a file.
+        {
+            StreamReader FileReader = new StreamReader(FilePath);
+
+            string Line;
+            while ((Line = FileReader.ReadLine()) != null)
+            {
+                string[] splitter = Line.Split('|');
+                if (splitter.Contains(Search))
+                {
+                    FileReader.Close();
+                    return true;
+                }
+            }
+
+            FileReader.Close();
+            return false;
+        }
+        private void CreatePlayList(object sender, RoutedEventArgs e) //Creating new playlist.
+        {
+            string PlayListName = Microsoft.VisualBasic.Interaction.InputBox("Please Add The PlayList Name?", "PlayList", "");
+
+            if (ExistInFile(PlayListName, "PlayListsNames.txt") && PlayListName != "")
+            {
+                System.Windows.MessageBox.Show("This PlayList Name Already Exists!");
+            }
+            else if (PlayListName != "")
+            {
+                System.IO.File.Create(PlayListName + ".txt");
+
+                FileStream fs = new FileStream("PlayListsNames.txt", FileMode.Open, FileAccess.Write);
+                StreamWriter PlayListsNamesWriter = new StreamWriter(fs);
+
+                fs.Seek(0, SeekOrigin.End);
+                PlayListsNamesWriter.WriteLine(PlayListName);
+
+                PlayListsNamesWriter.Close();
+                fs.Close();
+
+                System.Windows.MessageBox.Show("Play List Created.");
+            }
+        }
+
+        string RightClickedSong;
+        private void SongsList_MouseRightButtonUp(object sender, MouseButtonEventArgs e) //Event to get the conted of a right clicked item.
+        {
+            RightClickedSong = SongsList.SelectedItem.ToString();
+        }
+
+
+        //viewing created playlist when user click on add to playlist button to choose the playlist he wants to add the rightclicked song to.
+        private void AddToPlaylist(object sender, RoutedEventArgs e)
+        {
+            Add_To_PlayLists_ListBox.Visibility = Visibility.Visible;
+            ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            SongsList.Visibility = Visibility.Hidden;
+
+            if(Add_To_PlayLists_ListBox.Items.Count  == 0)
+            {
+                Add_To_PlayLists_ListBox.Items.Add("Choose A Playlist :\n");
+
+                StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
+
+                string Line;
+                while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
+                {
+                    Add_To_PlayLists_ListBox.Items.Add(Line);
+                }
+
+                PlayListsFileReader.Close();
+            }
+        }
+
+        private void Add_To_PlayLists_ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) //Adding a song to the playlist the user has chosen
+        {
+            string Selected = Add_To_PlayLists_ListBox.SelectedItem.ToString();
+
+            RightClickedSong += ".mp3";
+            string RightClickedSongPath = sr.GetPath(RightClickedSong);
+
+            if (!ExistInFile(RightClickedSong, Selected + ".txt"))
+            {
+                FileStream fs = new FileStream(Selected + ".txt", FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter PlayListsWriter = new StreamWriter(fs);
+                fs.Seek(0, SeekOrigin.End);
+                PlayListsWriter.WriteLine(RightClickedSong + '|' + RightClickedSongPath);
+                PlayListsWriter.Close();
+                fs.Close();
+                System.Windows.MessageBox.Show("Added to Play List.");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("This Song Already Exists in the file");
+            }
+
+            Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            SongsList.Visibility = Visibility.Visible;
+        }
+
+        private void ViewSongs_in_PlayLists_ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) //Viewing songs in the playlist that the user has clicked on.
+        {
+            Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            SongsList.Visibility = Visibility.Visible;
+
+            SongsList.Items.Clear();
+
+            string SelectedPlayList = ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString();
+
+            StreamReader SongsInPlayListReader = new StreamReader(SelectedPlayList + ".txt");
+
+            string Line;
+            while ((Line = SongsInPlayListReader.ReadLine()) != null)
+            {
+                string[] splitter = Cutter(Line);
+                SongsList.Items.Add(splitter[0]);
+            }
+
+            SongsInPlayListReader.Close();
+        }
+
+        private void View_Playlists(object sender, MouseButtonEventArgs e) //Viewing created playlist so the user can open any playlist and play songs.
+        {
+            Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
+            ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Visible;
+            SongsList.Visibility = Visibility.Hidden;
+
+            if (ViewSongs_in_PlayLists_ListBox.Items.Count == 0)
+            {
+                ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
+
+                StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
+
+                string Line;
+                while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
+                {
+                    ViewSongs_in_PlayLists_ListBox.Items.Add(Line);
+                }
+
+                PlayListsFileReader.Close();
+            }
         }
 
     }

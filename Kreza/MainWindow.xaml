@@ -96,7 +96,7 @@
                     <Separator Opacity="0" Height="2"/>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="8" Height="10" Source="/Assets/song-playlist.png"></Image>
-                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  Playlist" Foreground="White" >
+                        <TextBlock  FontSize="5" Height="8" Width="60" Text="  Playlist" Foreground="White" MouseDown="View_Playlists">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
@@ -133,7 +133,20 @@
                     <TextBox  x:Name="SearchBar" Margin="0,6,0,0"  Height="11" Text="Search" FontSize="6" KeyDown="SearchBar_KeyDown"  />
                 </StackPanel>
 
-                <ListBox  ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5"  />
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" MouseRightButtonUp="SongsList_MouseRightButtonUp">
+                    <ListBox.ContextMenu>
+                        <ContextMenu >
+                            <MenuItem Header="Remove" Click="Remove_Song"/>
+                            <MenuItem Header="Create PlayList" Click="CreatePlayList"/>
+                            <MenuItem Header="Add To Playlist" Click="AddToPlaylist"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="Add_To_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="Add_To_PlayLists_ListBox" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" />
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="ViewSongs_in_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="ViewSongs_in_PlayLists_ListBox" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" />
+                
+                
                 <Image Name="BackBtn" HorizontalAlignment="left" Grid.Column="1" Grid.Row="3"  Width="25" Source="/assets/backward.png" MouseDown="BackBtn_MouseDown"  Grid.ColumnSpan="2" Margin="24.6,12,0,-0.4" Grid.RowSpan="3">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
