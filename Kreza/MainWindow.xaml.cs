@@ -33,7 +33,8 @@ namespace Kreza
 
 
         }
-
+        StreamReader FileReader;
+        SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
         HashSet<string> Set = new HashSet<string>(); //Helper Set 
 
         // play and pause buttons
@@ -43,7 +44,6 @@ namespace Kreza
             ME1.LoadedBehavior = MediaState.Pause; // to Pause the MediaElement 
             PauseBtn.Visibility = Visibility.Collapsed; // this to change the visibitly of the Pause button
             PlayBtn.Visibility = Visibility.Visible;  // this to change the visibitly of the play button
-
         }
 
         private void PlayBtn_MouseDown(object sender, MouseButtonEventArgs e)
@@ -53,11 +53,23 @@ namespace Kreza
             PlayBtn.Visibility = Visibility.Collapsed;
             PauseBtn.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        /// Method : Forward song
+        /// Plays the next song.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ForBtn_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
-            PlayNextSong();
+            if (SongsList.Items.Count!=0)
+            {
+                PlayNextSong();
+            }
         }
+        /// <summary>
+        /// Method : Play the next song
+        /// Selecting the next index in list
+        /// </summary>
         private void PlayNextSong()//Move to the next song
         {
             if ((SongsList.SelectedIndex + 1) < SongsList.Items.Count)
@@ -70,11 +82,23 @@ namespace Kreza
             }
             PlaySelectedSong();
         }
-
+        /// <summary>
+        /// Method : backward song
+        /// Plays the previous song
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BackBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            PreviousSong();
+            if (SongsList.Items.Count != 0)
+            {
+                PlayNextSong();
+            }
         }
+        /// <summary>
+        /// Method  : previous song
+        /// Selecting the previous index in the list if its not equal 0
+        /// </summary>
         private void PreviousSong()//Previous song!
         {
             if (SongsList.SelectedIndex != 0)
@@ -85,9 +109,7 @@ namespace Kreza
             PlaySelectedSong();
         }
 
-        StreamReader FileReader;
 
-        SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
 
         private void ViewAllSongs(object sender, RoutedEventArgs e)//Viewing all songs.
         {
@@ -117,7 +139,12 @@ namespace Kreza
 
             FileReader.Close();//Closing the file.
         }
-
+        /// <summary>
+        /// Method : Open the songs
+        /// Open dialog to get the songs and add them to the file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpeningFileDialog(object sender, RoutedEventArgs e)//Opening file dialog.
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -133,55 +160,37 @@ namespace Kreza
         }
 
         /// <summary>
-        ///  Event: To seek MediaElement time 
-        /// 
-        /// This method allows the SeekBar Slider to get the values of the song duration and allows the user 
-        /// to control the seek time of the song
-        /// 
+        /// Method : Plays the song
+        /// Play the song when the selected is doubled clicked
         /// </summary>
-
-        private void SeekBarValues()
-        {
-            if (ME1.NaturalDuration.HasTimeSpan == true)
-            {
-                TimeSpan ts = ME1.NaturalDuration.TimeSpan;
-                SeekBar.Maximum = ts.TotalSeconds;
-                SeekBar.SmallChange = 1;
-                SeekBar.LargeChange = Math.Min(10, ts.Seconds / 10);
-            }
-           
-        }
-        private void SeekBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ME1.Position = TimeSpan.FromSeconds(SeekBar.Value);
-        }
-
-        //End of seekbar methods..
-
-
-
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Play the item
         {
             PlaySelectedSong();
-            SeekBarValues();
         }
 
+
+        /// <summary>
+        /// Method : Play the song
+        /// checks the selected song, then searching for the path and play it
+        /// Uses the Timethiker for the buffering
+        /// Uses the albumArt
+        /// </summary>
         private void PlaySelectedSong()//Play the song!
         {
             if (SongsList.SelectedItem.ToString() != null)
             {
                 string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
-                textSong.Text = Selected;
+                // textSong.Text = Selected;
                 Selected = Selected + ".mp3";
                 string SelectedSongPath = sr.GetPath(Selected);
                 Uri path = new Uri(SelectedSongPath);//Giving it its path
                 ME1.Source = path;
                 ME1.LoadedBehavior = MediaState.Play; //play the song.
-                
             }
-            //TimeThiker();
+            TimeThiker();
             SetAlbumArt();
-
 
         }
 
@@ -243,7 +252,6 @@ namespace Kreza
 
             string[] splitter = line.Split('|'); //Split the line
 
-
             int cutter = 0;
             for (int i = 0; i < splitter[0].Length; i++) //Cut the .mp3 part
             {
@@ -259,9 +267,14 @@ namespace Kreza
         }
 
 
+        /// <summary>
+        /// Method : Album art
+        /// Gets the songs path then it gets its source
+        /// then it give its album art
+        /// if there is no albumart, gives its default.
+        /// </summary>
 
-
-        private void SetAlbumArt()//Setting Album Art.
+        private void SetAlbumArt()
         {
             if (SongsList.SelectedItem.ToString() != null)
             {
@@ -290,12 +303,46 @@ namespace Kreza
                 }
             }
         }
+        private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            lblProgressStatus.Text = TimeSpan.FromSeconds(sliProgress.Value).ToString(@"hh\:mm\:ss");
+        }
+        private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            userIsDraggingSlider = true;
+        }
 
-        //private void SeekBar_DragOver(object sender, DragCompletedEventArgs e)
-        //{
-        //    ME1.Position = TimeSpan.FromSeconds(SeekBar.Value);
-        //}
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if ((ME1.Source != null) && (ME1.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
+            {
+                sliProgress.Minimum = 0;
+                sliProgress.Maximum = ME1.NaturalDuration.TimeSpan.TotalSeconds;
+                sliProgress.Value = ME1.Position.TotalSeconds;
+            }
+        }
+        private void sliProgress_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            userIsDraggingSlider = false;
+            ME1.Position = TimeSpan.FromSeconds(sliProgress.Value);
+        }  private bool userIsDraggingSlider = false;
+        void TimeThiker()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
+        }
+        /// <summary>
+        /// Method: Media Ended
+        /// When the song ends, it plays the next song.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ME1_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            PlayNextSong();
+        }
 
-       
     }
 }
