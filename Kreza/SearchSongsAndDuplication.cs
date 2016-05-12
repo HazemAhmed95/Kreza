@@ -19,10 +19,11 @@ namespace Kreza
         //Song name (key) and song path (value) to be used in GetPath Method.
         Dictionary<string, string> SongNameAndPath = new Dictionary<string, string>();
 
+       
         //A method that takes the Song Name as a parameter and returns its Path.
         public string GetPath(string SongName)
         {
-            if(SongNameAndPath.Count == 0) //Filling the Dictionary if it's Still Empty (When the user launches the application).
+            if (SongNameAndPath.Count == 0) //Filling the Dictionary if it's Still Empty (When the user launches the application).
             {
                 FileStream fs = new FileStream("All Songs.txt", FileMode.Open, FileAccess.Read);
                 StreamReader SongDataReader = new StreamReader(fs);
@@ -32,11 +33,19 @@ namespace Kreza
                     string[] splitter = Line.Split('|');
                     SongNameAndPath.Add(splitter[0], splitter[3]);
                 }
+                fs.Close();
+                SongDataReader.Close();
+            }
+
+            if (!SongNameAndPath.ContainsKey(SongName))
+            {
+                return "-1";
             }
 
             string SongPath = SongNameAndPath[SongName];
             return SongPath;
         }
+
 
         //Recursive function for searching all the windows.
         public void SearchDirectory(string path)
