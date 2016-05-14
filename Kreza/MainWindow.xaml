@@ -136,7 +136,6 @@
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" MouseRightButtonUp="SongsList_MouseRightButtonUp">
                     <ListBox.ContextMenu>
                         <ContextMenu >
-                            <MenuItem Header="Remove" Click="Remove_Song"/>
                             <MenuItem Header="Create PlayList" Click="CreatePlayList"/>
                             <MenuItem Header="Add To Playlist" Click="AddToPlaylist"/>
                         </ContextMenu>
@@ -144,7 +143,14 @@
                 </ListBox>
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="Add_To_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="Add_To_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" />
-                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="ViewSongs_in_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="ViewSongs_in_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" />
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="ViewSongs_in_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="ViewSongs_in_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" MouseRightButtonUp="ViewSongs_in_PlayLists_ListBox_MouseRightButtonUp">
+                <ListBox.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="Delete PlayList" Click="Remove_PlayList"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                </ListBox>
+
                 <Image Name="Repeat" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="4"  Width="10" Source="/assets/repeat.png"  >
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">

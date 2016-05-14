@@ -359,19 +359,6 @@ namespace Kreza
             PlayNextSong();
         }
 
-        private void Remove_Song(object sender, RoutedEventArgs e) //Remove a song from the ListBox
-        {
-            SongsList.Items.RemoveAt(SongsList.Items.IndexOf(SongsList.SelectedItem));
-            /*
-                To be handeled :-
-                The song is just removed from the ListBox, They are still on the file, ie , when the user 
-                clicks on songs the song will be added again.
-                soluion : take all what's in the file in a list , except the item that we want to remove, clear the file and 
-                fill it again with the list content. 7ad ye3melha mekasel :D 
-             */
-        }
-
-
         //------------------------------------------------------------------------------------
         //                                    PlayLists
         //------------------------------------------------------------------------------------
@@ -422,6 +409,33 @@ namespace Kreza
         private void SongsList_MouseRightButtonUp(object sender, MouseButtonEventArgs e) //Event to get the conted of a right clicked item.
         {
             RightClickedSong = SongsList.SelectedItem.ToString();
+        }
+
+        string RightClickedPlayList;
+        private void ViewSongs_in_PlayLists_ListBox_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            RightClickedPlayList = ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString();
+        }
+
+        private void Remove_PlayList(object sender, RoutedEventArgs e)
+        {
+            System.IO.File.Delete(RightClickedPlayList + ".txt"); 
+
+            ViewSongs_in_PlayLists_ListBox.Items.RemoveAt(ViewSongs_in_PlayLists_ListBox.Items.IndexOf(ViewSongs_in_PlayLists_ListBox.SelectedItem));
+
+            string[] Lines = System.IO.File.ReadAllLines("PlayListsNames.txt"); //read all lines of PlayListsNames file.
+
+            System.IO.File.WriteAllText("PlayListsNames.txt", String.Empty); //deleting all lines of PlayListsNames file.
+
+            StreamWriter PlayListsNamesWriter = new StreamWriter("PlayListsNames.txt");
+
+            foreach(string item in Lines) //rewriting all the lines except the line we want to delete.
+            {
+                if (item != RightClickedPlayList)
+                    PlayListsNamesWriter.WriteLine(item);
+            }
+
+            PlayListsNamesWriter.Close();
         }
 
 
@@ -502,21 +516,21 @@ namespace Kreza
             Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
             ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Visible;
             SongsList.Visibility = Visibility.Hidden;
+            
+            ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
 
-            if (ViewSongs_in_PlayLists_ListBox.Items.Count == 0)
+            StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
+
+            string Line;
+            while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
             {
-                ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
-
-                StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
-
-                string Line;
-                while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
+                if (ViewSongs_in_PlayLists_ListBox.FindName(Line) == null)
                 {
                     ViewSongs_in_PlayLists_ListBox.Items.Add(Line);
                 }
-
-                PlayListsFileReader.Close();
             }
+
+            PlayListsFileReader.Close();
         }
 
         private void Shuffle_MouseDown(object sender, MouseButtonEventArgs e)
@@ -532,16 +546,13 @@ namespace Kreza
             {
                 if (randomNumber == i)
                 {
-
                     SongsList.SelectedItem = SongsList.Items[i];
-
                     PlaySelectedSong();
                 }
 
             }
 
         }
-
 
     }
 }
