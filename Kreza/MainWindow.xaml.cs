@@ -35,7 +35,7 @@ namespace Kreza
         }
         StreamReader FileReader;
         SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
-        HashSet<string> Set = new HashSet<string>(); //Helper Set 
+        HashSet<string> Set = new HashSet<string>(); //Helper Hashset for handlibg duplication.
 
         // play and pause buttons
         private void PauseBtn_MouseDown(object sender, MouseButtonEventArgs e)
@@ -109,8 +109,6 @@ namespace Kreza
             PlaySelectedSong();
         }
 
-
-
         private void ViewingAllSongs() //Viewing all songs.
         {
             if (System.IO.File.Exists("All Songs.txt"))
@@ -123,11 +121,8 @@ namespace Kreza
                 return;
             }
 
-            if (SongsList.Items.Count != 0)
-            {
-                SongsList.Items.Clear();
-                Set.Clear();
-            }
+            SongsList.Items.Clear();
+            Set.Clear();
 
             string line;
             while ((line = FileReader.ReadLine()) != null) //Looking for the songs on the file.
@@ -406,15 +401,21 @@ namespace Kreza
         }
 
         string RightClickedSong;
-        private void SongsList_MouseRightButtonUp(object sender, MouseButtonEventArgs e) //Event to get the conted of a right clicked item.
+        private void SongsList_MouseRightButtonUp(object sender, MouseButtonEventArgs e) //Event to get the content of a right clicked item.
         {
-            RightClickedSong = SongsList.SelectedItem.ToString();
+            if (SongsList.SelectedItem.ToString() != null)
+            {
+                RightClickedSong = SongsList.SelectedItem.ToString();
+            }
         }
 
         string RightClickedPlayList;
         private void ViewSongs_in_PlayLists_ListBox_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            RightClickedPlayList = ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString();
+            if(ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString() != null)
+            {
+                RightClickedPlayList = ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString();
+            }
         }
 
         private void Remove_PlayList(object sender, RoutedEventArgs e)
@@ -511,22 +512,28 @@ namespace Kreza
             SongsInPlayListReader.Close();
         }
 
+        HashSet<string> PlayListSet = new HashSet<string>(); //Helper Hashset for handlibg duplication.
+
         private void View_Playlists(object sender, MouseButtonEventArgs e) //Viewing created playlist so the user can open any playlist and play songs.
         {
             Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
             ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Visible;
             SongsList.Visibility = Visibility.Hidden;
-            
-            ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
+
+            if (ViewSongs_in_PlayLists_ListBox.Items.Count == 0)
+            {
+                ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
+            }
 
             StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
 
             string Line;
             while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
             {
-                if (ViewSongs_in_PlayLists_ListBox.FindName(Line) == null)
+                if (!PlayListSet.Contains(Line))
                 {
                     ViewSongs_in_PlayLists_ListBox.Items.Add(Line);
+                    PlayListSet.Add(Line);
                 }
             }
 
