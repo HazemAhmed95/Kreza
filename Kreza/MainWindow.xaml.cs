@@ -92,7 +92,7 @@ namespace Kreza
         {
             if (SongsList.Items.Count != 0)
             {
-                PlayNextSong();
+                PreviousSong();
             }
         }
         /// <summary>
@@ -195,6 +195,7 @@ namespace Kreza
             if (SongsList.SelectedItem.ToString() != null)
             {
                 string Selected = SongsList.SelectedItem.ToString();//getting the item and change it to string.
+               
                 Selected = Selected + ".mp3";
                 string SelectedSongPath = sr.GetPath(Selected);
                 if (SelectedSongPath.Equals("-1"))
@@ -204,9 +205,11 @@ namespace Kreza
                 Uri path = new Uri(SelectedSongPath);//Giving it its path
                 ME1.Source = path;
                 ME1.LoadedBehavior = MediaState.Play; //play the song.
+               
             }
             TimeThiker();
             SetAlbumArt();
+            
 
         }
 
@@ -515,6 +518,30 @@ namespace Kreza
                 PlayListsFileReader.Close();
             }
         }
+
+        private void Shuffle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            shuffle();
+        }
+        private void shuffle()
+        {
+            int NumberOfSongs = SongsList.Items.Count;
+            Random random = new Random();
+            int randomNumber = random.Next(1, NumberOfSongs);// Generate numbers bet.(1,nofsongs)
+            for (int i = 0; i <= NumberOfSongs; i++)
+            {
+                if (randomNumber == i)
+                {
+
+                    SongsList.SelectedItem = SongsList.Items[i];
+
+                    PlaySelectedSong();
+                }
+
+            }
+
+        }
+
 
     }
 }

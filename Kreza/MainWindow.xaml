@@ -133,7 +133,7 @@
                     <TextBox  x:Name="SearchBar" Margin="0,6,0,0"  Height="11" Text="Search" FontSize="6" KeyDown="SearchBar_KeyDown"  />
                 </StackPanel>
 
-                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" MouseRightButtonUp="SongsList_MouseRightButtonUp">
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="SongsList_MouseDoubleClick" x:FieldModifier="public"  Name="SongsList" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="4" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" MouseRightButtonUp="SongsList_MouseRightButtonUp">
                     <ListBox.ContextMenu>
                         <ContextMenu >
                             <MenuItem Header="Remove" Click="Remove_Song"/>
@@ -143,10 +143,38 @@
                     </ListBox.ContextMenu>
                 </ListBox>
 
-                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="Add_To_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="Add_To_PlayLists_ListBox" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" />
-                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="ViewSongs_in_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="ViewSongs_in_PlayLists_ListBox" Height="142" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.4,11,9,8.6" />
-                
-                
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="Add_To_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="Add_To_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" />
+                <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="ViewSongs_in_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="ViewSongs_in_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" />
+                <Image Name="Repeat" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="4"  Width="10" Source="/assets/repeat.png"  >
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="Blue" Opacity="1" BlurRadius="15"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Image Name="Shuffle" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4"  Width="10" Source="/assets/shuffle.png" >
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="Blue" Opacity="4" BlurRadius="15"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
                 <Image Name="BackBtn" HorizontalAlignment="left" Grid.Column="1" Grid.Row="3"  Width="25" Source="/assets/backward.png" MouseDown="BackBtn_MouseDown"  Grid.ColumnSpan="2" Margin="24.6,12,0,-0.4" Grid.RowSpan="3">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
@@ -154,7 +182,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Effect">
                                         <Setter.Value>
-                                            <DropShadowEffect ShadowDepth="0" Color="#23abf9" Opacity="1" BlurRadius="20"/>
+                                            <DropShadowEffect ShadowDepth="0" Color="Blue" Opacity="4" BlurRadius="15"/>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
@@ -208,8 +236,11 @@
                     </Image.Style>
                 </Image>
 
+                <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3">
+                    <TextBlock  Name="ArtistName"></TextBlock>
+                    <TextBlock  Name="SongName"></TextBlock>
 
-
+                </StackPanel>
 
                 <Image   Source="/assets/Thumb.png" Name="AlbumArt" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" Grid.ColumnSpan="2" Margin="24.6,0.2,0,0"  >
                     <Image.Style>

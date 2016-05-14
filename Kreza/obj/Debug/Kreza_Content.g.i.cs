@@ -8,13 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/bg%20without%20anything.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/business-man-talking-about-cash-dollars.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/cd.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/emplty%20side%20menu.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/headphones.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/open-archive.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/song-playlist.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/thumb.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/shuffle.png")]
 
 
