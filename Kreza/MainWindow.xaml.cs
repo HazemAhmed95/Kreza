@@ -425,7 +425,15 @@ namespace Kreza
         /// </summary>
         private void PlayNextSong()//Move to the next song
         {
-            if ((SongsList.SelectedIndex + 1) < SongsList.Items.Count)
+            if (isRepeat.IsChecked==true)
+            {
+               ME1.Position = TimeSpan.Zero;
+            }
+            else if (isShuffled.IsChecked==true)
+            {
+                Shuffling();
+            }
+            else if ((SongsList.SelectedIndex + 1) < SongsList.Items.Count)
             {
                 SongsList.SelectedItem = SongsList.Items[(SongsList.SelectedIndex + 1)];
             }
@@ -650,26 +658,11 @@ namespace Kreza
         }
 
         
-        private void shuffle()
-        {
-            int NumberOfSongs = SongsList.Items.Count;
-            Random random = new Random();
-            int randomNumber = random.Next(1, NumberOfSongs);// Generate numbers bet.(1,nofsongs)
-            for (int i = 0; i <= NumberOfSongs; i++)
-            {
-                if (randomNumber == i)
-                {
-                    SongsList.SelectedItem = SongsList.Items[i];
-                    PlaySelectedSong();
-                }
-
-            }
-
-        }
+      
 
 
     }
-        #endregion  private void Shuffling()
+        #endregion private void View_Playlists()
        
      
 }
