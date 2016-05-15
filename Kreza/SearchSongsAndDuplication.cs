@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using System.IO;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+
 using TagLib;
 
 namespace Kreza
@@ -25,6 +29,7 @@ namespace Kreza
         {
             if (SongNameAndPath.Count == 0) //Filling the Dictionary if it's Still Empty (When the user launches the application).
             {
+                
                 FileStream fs = new FileStream("All Songs.txt", FileMode.Open, FileAccess.Read);
                 StreamReader SongDataReader = new StreamReader(fs);
                 string Line;
@@ -48,15 +53,23 @@ namespace Kreza
 
 
         //Recursive function for searching all the windows.
-        public void SearchDirectory(string path)
+        public  void SearchDirectory(string path)
         {
+             
             try
             {
+                System.Windows.Forms.Application.DoEvents();
+            
                 //Getting all the files with the ".mp3" extension in the drive.
-                foreach(string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
+             foreach(string SongPath in Directory.EnumerateFiles(path, "*.mp3"))
                 {
-                    string SongName = Path.GetFileName(SongPath);
-                    string SongData = GettingSongData(SongPath);
+
+           
+      
+                    string SongName =  Path.GetFileName(SongPath);
+                     string SongData =  GettingSongData(SongPath);
+                  
+                
 
                     //Putting the SongData to the list if it's not already put.
                     if (!Set.Contains(SongName))
@@ -82,7 +95,7 @@ namespace Kreza
         }
 
         //A method that takes Song Path and returns it's data.
-        private string GettingSongData(string SongPath)
+        public  string  GettingSongData(string SongPath)
         {
             string SongName = Path.GetFileName(SongPath);
 

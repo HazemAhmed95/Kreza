@@ -5,7 +5,7 @@
         
  
   
-        Title="KAREZA"  Height="504" Width="705" Background="#FFD6DBE9">
+        Title="KAREZA"  Height="514.667" Width="705" Background="#FFD6DBE9">
     <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="449*"/>
@@ -144,11 +144,11 @@
 
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="Add_To_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="Add_To_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" />
                 <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="4" BorderBrush="#2a1b71" Background="#140e21" Foreground="White"  MouseDoubleClick="ViewSongs_in_PlayLists_ListBox_MouseDoubleClick" x:FieldModifier="public"  Name="ViewSongs_in_PlayLists_ListBox" Height="139" VerticalAlignment="Center" Width="64" HorizontalAlignment="Center" SelectionMode="Single" FontSize="5" FontFamily="Arial" Grid.RowSpan="5" Margin="9.2,10,9.2,4.6" MouseRightButtonUp="ViewSongs_in_PlayLists_ListBox_MouseRightButtonUp">
-                <ListBox.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Delete PlayList" Click="Remove_PlayList"/>
-                    </ContextMenu>
-                </ListBox.ContextMenu>
+                    <ListBox.ContextMenu>
+                        <ContextMenu >
+                            <MenuItem Header="Delete PlayList" Click="Remove_PlayList"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
 
                 <Image Name="Repeat" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="4"  Width="10" Source="/assets/repeat.png"  >
@@ -268,11 +268,17 @@
         <MediaElement MediaEnded="ME1_MediaEnded"  Volume="100" Opacity="0" Name="ME1" Source="" Margin="349,239,348.4,199.8"/>
         <StatusBar Grid.Row="1" >
 
-            <StatusBarItem>
-                <TextBlock FontSize="20" Name="lblProgressStatus">00:00:00</TextBlock>
+            <StatusBarItem Background="#FF141220">
+                <TextBlock FontSize="20" x:Name="lblProgressStatus" Foreground="White" Background="#FF0E0E24"><Run Text="00:00"/><Run Text=":"/><Run Text="00"/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Grid.Column="1" VerticalAlignment="Center"  HorizontalContentAlignment="Stretch">
-                <Slider  Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged" Height="20"/>
+            <StatusBarItem Grid.Column="1" VerticalAlignment="Center"  HorizontalContentAlignment="Stretch" Background="#FF13111E" BorderBrush="#FF13121F" Foreground="#FF17063C">
+                <StatusBarItem.OpacityMask>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </StatusBarItem.OpacityMask>
+                <Slider  Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged" Height="20" Background="#FF14121F" BorderBrush="#FF814646" OpacityMask="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="#FF361212"/>
             </StatusBarItem>
 
         </StatusBar>
