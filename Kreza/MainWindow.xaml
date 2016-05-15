@@ -151,7 +151,7 @@
                     </ListBox.ContextMenu>
                 </ListBox>
 
-                <Image Name="Repeat" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="4"  Width="10" Source="/assets/repeat.png"  >
+                <Image MouseDown="Repeat_MouseDown"  Name="Repeat" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="4"  Width="10" Source="/assets/repeat.png"  >
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
                             <Style.Triggers>
@@ -166,7 +166,7 @@
                         </Style>
                     </Image.Style>
                 </Image>
-                <Image Name="Shuffle" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4"  Width="10" Source="/assets/shuffle.png" >
+                <Image MouseDown="Shuffle_MouseDown"  Name="Shuffle" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4"  Width="10" Source="/assets/shuffle.png" >
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
                             <Style.Triggers>
@@ -247,7 +247,8 @@
                     <TextBlock  Name="SongName"></TextBlock>
 
                 </StackPanel>
-
+                <CheckBox Grid.Column="1" Visibility="Hidden" Name="isRepeat" IsChecked="False"></CheckBox>
+                <CheckBox Grid.Column="2" Visibility="Hidden" Name="isShuffled" IsChecked="False"></CheckBox>
                 <Image   Source="/assets/Thumb.png" Name="AlbumArt" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" Grid.ColumnSpan="2" Margin="24.6,0.2,0,0"  >
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
@@ -282,6 +283,8 @@
             </StatusBarItem>
 
         </StatusBar>
+        
+
         <Slider Name="VolSlider" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="154"  Minimum="0" Maximum="1" Value="1" ValueChanged="ValueChanged" Margin="250,47,0,0"/>
         <Label Content="Volume" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="192,47,0,0" Width="53"/>
     </Grid>

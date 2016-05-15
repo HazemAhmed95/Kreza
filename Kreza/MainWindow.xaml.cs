@@ -33,6 +33,40 @@ namespace Kreza
 
 
         }
+        private void Shuffle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isShuffled.IsChecked == true)
+            {
+                isShuffled.IsChecked = false;
+            }
+            else
+                isShuffled.IsChecked = true; 
+        }
+        private void Shuffling()
+        {
+            int NumberOfSongs = SongsList.Items.Count;
+            Random random = new Random();
+            int randomNumber = random.Next(1, NumberOfSongs);// Generate numbers bet.(1,nofsongs)
+            for (int i = 0; i <= NumberOfSongs; i++)
+            {
+                if (randomNumber == i)
+                {
+                    SongsList.SelectedItem = SongsList.Items[i];
+                    PlaySelectedSong();
+                }
+
+            }
+
+        }
+        private void Repeat_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isRepeat.IsChecked == true)
+            {
+                isRepeat.IsChecked = false;
+            }
+            else
+                isRepeat.IsChecked = true;
+        }
         StreamReader FileReader;
         SearchSongsAndDuplication sr = new SearchSongsAndDuplication();
         HashSet<string> Set = new HashSet<string>(); //Helper Hashset for handlibg duplication.
@@ -130,10 +164,10 @@ namespace Kreza
                 sr.SearchDirectory(SelectedSongPath);
                 ME1.Source = path;
                 ME1.LoadedBehavior = MediaState.Play; //play the song.
-
+                TimeThiker();
+                SetAlbumArt();
             }
-            TimeThiker();
-            SetAlbumArt();
+           
 
 
         }
@@ -192,7 +226,15 @@ namespace Kreza
         /// <param name="e"></param>
         private void ME1_MediaEnded(object sender, RoutedEventArgs e)
         {
-            PlayNextSong();
+            if (isRepeat.IsChecked == true)
+            {
+                ME1.Position = TimeSpan.Zero;
+            }
+            else if (isShuffled.IsChecked == true)
+            {
+                Shuffling();
+            }
+            else PlayNextSong();
         }
         
         #endregion
@@ -292,10 +334,9 @@ namespace Kreza
                 }
                 catch
                 {
-
                     BitmapImage image = new BitmapImage(new Uri(@"\Assets\no_album_art_by_gouki113.png", UriKind.Relative));
                     AlbumArt.Source = image;
-
+                    return;
                 }
             }
         }
@@ -608,10 +649,7 @@ namespace Kreza
             PlayListsFileReader.Close();
         }
 
-        private void Shuffle_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            shuffle();
-        }
+        
         private void shuffle()
         {
             int NumberOfSongs = SongsList.Items.Count;
@@ -631,5 +669,7 @@ namespace Kreza
 
 
     }
-        #endregion
+        #endregion  private void Shuffling()
+       
+     
 }
