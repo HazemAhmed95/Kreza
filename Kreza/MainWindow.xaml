@@ -276,5 +276,7 @@
             </StatusBarItem>
 
         </StatusBar>
+        <Slider Name="VolSlider" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="154"  Minimum="0" Maximum="1" Value="1" ValueChanged="ValueChanged" Margin="250,47,0,0"/>
+        <Label Content="Volume" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="192,47,0,0" Width="53"/>
     </Grid>
 </Window>

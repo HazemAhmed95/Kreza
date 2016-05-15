@@ -53,6 +53,20 @@ namespace Kreza
             PlayBtn.Visibility = Visibility.Collapsed;
             PauseBtn.Visibility = Visibility.Visible;
         }
+
+        /// <summary>
+        /// Method : Volume Bar
+        /// Controls the Volume of the Media Element
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param> 
+        // Volume Slider
+        private void ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ME1.Volume = e.NewValue; 
+
+        }
+
         /// <summary>
         /// Method : Forward song
         /// Plays the next song.
@@ -561,5 +575,6 @@ namespace Kreza
 
         }
 
+        
     }
 }
