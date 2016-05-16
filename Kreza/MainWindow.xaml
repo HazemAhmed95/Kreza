@@ -196,7 +196,7 @@
                         </Style>
                     </Image.Style>
                 </Image>
-                <Image x:Name="PauseBtn"  Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center"   Width="30" Source="/assets/pause.png" MouseDown="PauseBtn_MouseDown" Margin="21.8,12,21,-0.4" Grid.RowSpan="3">
+                <Image x:Name="PauseBtn"  Grid.Column="2" Grid.Row="3" Visibility="Collapsed" HorizontalAlignment="Center"   Width="30" Source="/assets/pause.png" MouseDown="PauseBtn_MouseDown" Margin="21.8,12,21,-0.4" Grid.RowSpan="3">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
                             <Style.Triggers>
@@ -211,7 +211,7 @@
                         </Style>
                     </Image.Style>
                 </Image>
-                <Image x:Name="PlayBtn"  Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" Visibility="Collapsed"  Width="30" Source="/assets/Play.png" MouseDown="PlayBtn_MouseDown" Margin="21.8,12,21,-0.4" Grid.RowSpan="3">
+                <Image x:Name="PlayBtn"  Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center"  Width="30" Source="/assets/Play.png" MouseDown="PlayBtn_MouseDown" Margin="21.8,12,21,-0.4" Grid.RowSpan="3">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
                             <Style.Triggers>

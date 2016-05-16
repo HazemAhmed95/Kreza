@@ -26,11 +26,11 @@ namespace Kreza
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        bool SelectedItem; // to check if it was the first song we select after we opened the app
         public MainWindow()
         {
             InitializeComponent();
-
+            SelectedItem = true;
 
         }
         private void Shuffle_MouseDown(object sender, MouseButtonEventArgs e)
@@ -138,6 +138,8 @@ namespace Kreza
         private void SongsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)//Play the item
         {
             PlaySelectedSong();
+            SongIsPlaying(true);
+            SelectedItem = false;
         }
 
 
@@ -385,12 +387,38 @@ namespace Kreza
             PlayBtn.Visibility = Visibility.Visible;  // this to change the visibitly of the play button
         }
 
+
+        /// <summary>
+        /// Method :  SongIsPlaying
+        /// we use it when we double click on the Songslist items to change the buttons 
+        /// </summary>
+        /// <param name="Value"></param>
+        
+
+        private void SongIsPlaying(bool value)
+        {
+            if (value)
+            {
+                PlayBtn.Visibility = Visibility.Collapsed;
+                PauseBtn.Visibility = Visibility.Visible;
+            }
+        }
+        
+
         private void PlayBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
-            ME1.LoadedBehavior = MediaState.Play;
-            PlayBtn.Visibility = Visibility.Collapsed;
-            PauseBtn.Visibility = Visibility.Visible;
+            if (SelectedItem == true)
+            {
+                PlaySelectedSong();
+                SelectedItem = false;
+                SongIsPlaying(true);
+            }
+            else
+            {
+                ME1.LoadedBehavior = MediaState.Play;
+                PlayBtn.Visibility = Visibility.Collapsed;
+                PauseBtn.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
