@@ -409,6 +409,10 @@ namespace Kreza
         {
             if (SelectedItem == true)
             {
+                if (SongsList.SelectedItem == null)
+                {
+                    return;
+                }
                 PlaySelectedSong();
                 SelectedItem = false;
                 SongIsPlaying(true);
