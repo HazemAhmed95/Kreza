@@ -142,7 +142,6 @@ namespace Kreza
             SelectedItem = false;
         }
 
-
         /// <summary>
         /// Method : Play the song
         /// checks the selected song, then searching for the path and play it
@@ -169,9 +168,6 @@ namespace Kreza
                 TimeThiker();
                 SetAlbumArt();
             }
-           
-
-
         }
 
         /// <summary>
@@ -193,7 +189,6 @@ namespace Kreza
             }
             else
             {
-
                 System.Windows.MessageBox.Show("There is no Music Added.");
                 return;
             }
@@ -204,21 +199,14 @@ namespace Kreza
             {
                 string[] splitter = Cutter(line);
 
-
                 if (splitter[0].ToLower().Contains(SearchBar.Text.ToLower()))
                 {
-                    Set.Add(splitter[0]);
-                    
                     SongsList.Items.Add(splitter[0]);//Adding the songs to the list.
-
                 }
-
             }
 
             FileReader.Close();
-
         }
-
 
         /// <summary>
         /// Method: Media Ended
@@ -552,19 +540,35 @@ namespace Kreza
         string RightClickedSong;
         private void SongsList_MouseRightButtonUp(object sender, MouseButtonEventArgs e) //Event to get the content of a right clicked item.
         {
-            if (SongsList.SelectedItem.ToString() != null)
+            try
             {
-                RightClickedSong = SongsList.SelectedItem.ToString();
+                if (SongsList.SelectedItem.ToString() != null)
+                {
+                    RightClickedSong = SongsList.SelectedItem.ToString();
+                }
             }
+            catch(Exception)
+            {
+
+            }
+
         }
 
         string RightClickedPlayList;
         private void ViewSongs_in_PlayLists_ListBox_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString() != null)
+            try
             {
-                RightClickedPlayList = ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString();
+                if (ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString() != null)
+                {
+                    RightClickedPlayList = ViewSongs_in_PlayLists_ListBox.SelectedItem.ToString();
+                }
             }
+            catch(Exception)
+            {
+
+            }
+
         }
 
         private void Remove_PlayList(object sender, RoutedEventArgs e)
@@ -588,7 +592,6 @@ namespace Kreza
             PlayListsNamesWriter.Close();
         }
 
-
         //viewing created playlist when user click on add to playlist button to choose the playlist he wants to add the rightclicked song to.
         private void AddToPlaylist(object sender, RoutedEventArgs e)
         {
@@ -596,20 +599,20 @@ namespace Kreza
             ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Hidden;
             SongsList.Visibility = Visibility.Hidden;
 
-            if(Add_To_PlayLists_ListBox.Items.Count  == 0)
+            Add_To_PlayLists_ListBox.Items.Clear();
+
+            Add_To_PlayLists_ListBox.Items.Add("Choose A Playlist :\n");
+
+            StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
+
+            string Line;
+            while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
             {
-                Add_To_PlayLists_ListBox.Items.Add("Choose A Playlist :\n");
-
-                StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
-
-                string Line;
-                while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
-                {
-                    Add_To_PlayLists_ListBox.Items.Add(Line);
-                }
-
-                PlayListsFileReader.Close();
+                Add_To_PlayLists_ListBox.Items.Add(Line);
             }
+
+            PlayListsFileReader.Close();
+            
         }
 
         private void Add_To_PlayLists_ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) //Adding a song to the playlist the user has chosen
@@ -660,30 +663,22 @@ namespace Kreza
 
             SongsInPlayListReader.Close();
         }
-
-        HashSet<string> PlayListSet = new HashSet<string>(); //Helper Hashset for handlibg duplication.
-
         private void View_Playlists(object sender, MouseButtonEventArgs e) //Viewing created playlist so the user can open any playlist and play songs.
         {
             Add_To_PlayLists_ListBox.Visibility = Visibility.Hidden;
             ViewSongs_in_PlayLists_ListBox.Visibility = Visibility.Visible;
             SongsList.Visibility = Visibility.Hidden;
 
-            if (ViewSongs_in_PlayLists_ListBox.Items.Count == 0)
-            {
-                ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
-            }
+            ViewSongs_in_PlayLists_ListBox.Items.Clear();
+
+            ViewSongs_in_PlayLists_ListBox.Items.Add("Your PlayLists :\n");
 
             StreamReader PlayListsFileReader = new StreamReader("PlayListsNames.txt");
 
             string Line;
             while ((Line = PlayListsFileReader.ReadLine()) != null) //Displaying Created Playlists
             {
-                if (!PlayListSet.Contains(Line))
-                {
-                    ViewSongs_in_PlayLists_ListBox.Items.Add(Line);
-                    PlayListSet.Add(Line);
-                }
+                ViewSongs_in_PlayLists_ListBox.Items.Add(Line);
             }
 
             PlayListsFileReader.Close();
